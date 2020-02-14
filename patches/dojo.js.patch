@@ -1,0 +1,16 @@
+diff --git a/dojo.js b/dojo.js
+index a5803b7..a1394f9 100644
+--- a/dojo.js
++++ b/dojo.js
+@@ -2007,7 +2007,10 @@
+ 		},{
+ 			name:'demos',
+ 			location:'../demos'
+-		}],
++		},{
++      name:'xstyle',
++      location:'../../libs/xstyle'
++    }],
+ 		trace:{
+ 			// these are listed so it's simple to turn them on/off while debugging loading
+ 			"loader-inject":0,

@@ -1,0 +1,97 @@
+.nucleotides-map-dialog .dijitDialogTitleBar {
+  display: flex;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serify;
+}
+.nucleotides-map-dialog .center-pane {
+  border: none;
+  overflow-y: scroll;
+}
+.nucleotides-map-dialog .center-pane svg {
+  width: 100%;
+}
+.nucleotides-map-dialog .center-pane + div {
+  background: lightgray;
+}
+.nucleotides-map-dialog .center-pane + div div {
+  background: black;
+  width: 80px;
+}
+
+.nucleotides-map-dialog .rightPane table {
+  width: 100%;
+}
+.nucleotides-map-dialog .rightPane table td {
+  width: 50%;
+}
+.nucleotides-map-dialog .rightPane table .protein-description {
+  vertical-align: top;
+  padding: 1em;
+}
+.nucleotides-map-dialog .rightPane table .protein-description h3 {
+  text-align: center;
+  margin-top: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.nucleotides-map {
+  width: 120em;
+  height: 80em;
+}
+.nucleotides-map .back-next-buttons .dijitButtonNode {
+  padding: 2em 0em 2em 0em;
+}
+.nucleotides-map .bottom-pane {
+  display: flex;
+  justify-content: flex-end;
+}
+.nucleotides-map .edge-pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.layer-cake-tooltip {
+  color: gray;
+}
+.layer-cake-tooltip .square {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0.3em 0 0 0.6em;
+  color: black;
+}
+.layer-cake-tooltip > div {
+  margin: 0.3em;
+}
+.square-green {
+  background-color: chartreuse;
+}
+.square-violet {
+  background-color: violet;
+}
+.square-blue {
+  background-color: cornflowerblue;
+}
+.square-yellow {
+  background-color: goldenrod;
+}
+
+.aminoacids-dialog {
+  width: 30em;
+  max-width: 30em;
+}
+.aminoacids-dialog .dijitDialogTitleBar {
+  text-align: center;
+}
+.aminoacids-dialog .content-div {
+  max-witdh: 300px;
+}
+.aminoacids-dialog .content-div span {
+  word-wrap: break-word;
+}
+.aminoacids-dialog .close-bar {
+  text-align: center;
+}

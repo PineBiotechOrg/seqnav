@@ -1,0 +1,29 @@
+diff --git a/underscore.js b/underscore.js
+index bbad76e..cd47a9e 100644
+--- a/underscore.js
++++ b/underscore.js
+@@ -1297,13 +1297,13 @@
+ 
+   // Certain characters need to be escaped so that they can be put into a
+   // string literal.
++//  '\u2028': 'u2028',
++//  '\u2029': 'u2029'
+   var escapes = {
+     "'":      "'",
+     '\\':     '\\',
+     '\r':     'r',
+     '\n':     'n',
+-    '\u2028': 'u2028',
+-    '\u2029': 'u2029'
+   };
+ 
+   var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+@@ -1437,7 +1437,7 @@
+   // an AMD load request. Those cases could generate an error when an
+   // anonymous define() is called outside of a loader request.
+   if (typeof define === 'function' && define.amd) {
+-    define('underscore', [], function() {
++    define([], function() {
+       return _;
+     });
+   }

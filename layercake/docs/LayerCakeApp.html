@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>LayerCakeApp.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="LayerCakeApp.html">
+                  LayerCakeApp.coffee
+                </a>
+              
+                
+                <a class="source" href="base.html">
+                  base.coffee
+                </a>
+              
+                
+                <a class="source" href="layercake.profile.html">
+                  layercake.profile.coffee
+                </a>
+              
+                
+                <a class="source" href="uiUtils.html">
+                  uiUtils.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>LayerCakeApp.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/string"</span>,
+        <span class="hljs-string">"dijit/_Widget"</span>, <span class="hljs-string">"dijit/_TemplatedMixin"</span>, <span class="hljs-string">"dijit/_WidgetsInTemplateMixin"</span>,
+        <span class="hljs-string">"bacon/dist/Bacon"</span>, <span class="hljs-string">"./utils/DojoBacon"</span>,
+        <span class="hljs-string">"./model/AppModel"</span>,
+        <span class="hljs-string">"./widgets/NucleotidesMap"</span>, <span class="hljs-string">"./widgets/ProteinView"</span>, <span class="hljs-string">"./widgets/progressIndicator"</span>,
+        <span class="hljs-string">"dojo/text!./templates/LayerCakeApp.html"</span>, <span class="hljs-string">"dojo/text!./templates/HelpDialog.html"</span>,
+        <span class="hljs-string">"dojo/i18n!./nls/base"</span>,
+        <span class="hljs-string">"dijit/layout/BorderContainer"</span>, <span class="hljs-string">"dijit/layout/ContentPane"</span>, <span class="hljs-string">"dijit/form/ToggleButton"</span>,
+        <span class="hljs-string">"./widgets/BinsMap"</span>, <span class="hljs-string">"./widgets/ColorBar"</span>, <span class="hljs-string">"dijit/form/Select"</span>,
+        <span class="hljs-string">"xstyle/css!dojo-theme-flat/CSS/dojo/flat.css"</span>,
+        <span class="hljs-string">"xstyle/css!./resources/layer-cake-app.css"</span>,
+        <span class="hljs-string">"xstyle/css!dojox/form/resources/RangeSlider.css"</span>],
+(declare, lang, string,
+ _Widget, _TemplatedMixin, _WidgetsInTemplateMixin,
+ Bacon, DojoBacon,
+ AppModel,
+ NucleotidesMap, ProteinView, progressIndicator,
+ template, helpTemplate,
+ strings) -&gt;
+
+  nucleotidesMap = <span class="hljs-literal">undefined</span>
+  proteinViewer = <span class="hljs-literal">undefined</span>
+
+  helpDialog = <span class="hljs-keyword">new</span> declare([_Widget, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    templateString: helpTemplate
+  })()
+
+  declare [_Widget, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    templateString: template,
+
+    constructor: <span class="hljs-function">-&gt;</span>
+      lang.mixin @, strings.layerCakeApp
+      <span class="hljs-built_in">window</span>.model = @model = <span class="hljs-keyword">new</span> AppModel()
+
+    postCreate: <span class="hljs-function">-&gt;</span>
+      @inherited arguments
+
+      tableStream = Bacon.fromPromise(@model.loadPassages())
+      proteinsStream = Bacon.fromPromise(@model.loadProteins())
+      fitnessStream = Bacon.fromPromise(@model.loadFitness())
+
+      binSizeProperty = DojoBacon.fromSelect(@binSize).map(<span class="hljs-function"><span class="hljs-params">(v)</span> -&gt;</span> parseInt v.substr(<span class="hljs-number">1</span>))
+      thresholdProperty = DojoBacon.fromWidget(@colorBar, <span class="hljs-string">"colorChange"</span>)
+      synonymousProperty = DojoBacon.fromCheckBox(@synonymousButton)
+      nonsynonymousProperty = DojoBacon.fromCheckBox(@nonsynonymousButton)
+      beneficialProperty = DojoBacon.fromCheckBox(@beneficialButton)
+      neutralProperty = DojoBacon.fromCheckBox(@neutralButton)
+      detrimentalProperty = DojoBacon.fromCheckBox(@detrimentalButton)
+
+      firstGroup = [tableStream, proteinsStream, fitnessStream,
+                    binSizeProperty,
+                    synonymousProperty, nonsynonymousProperty]
+      secondGroup = [beneficialProperty, neutralProperty, detrimentalProperty]
+      Bacon.combineAsArray(firstGroup.concat(secondGroup))
+        .sampledBy(Bacon.combineAsArray(firstGroup))
+        .onValues @updateTable.bind(@)
+      Bacon.combineAsArray([fitnessStream, binSizeProperty].concat(secondGroup))
+        .sampledBy(Bacon.combineAsArray(secondGroup))
+        .onValues @applyFilter.bind(@)
+      DojoBacon.fromWidget(@binsMap, <span class="hljs-string">"binClick"</span>)
+        .onValue @openNucleotideView.bind(@)
+      DojoBacon.fromWidget(@binsMap, <span class="hljs-string">"proteinClick"</span>)
+        .onValue @openProteinViewer.bind(@)
+      tableStream.onError <span class="hljs-built_in">console</span>.log.bind(<span class="hljs-built_in">console</span>)
+      proteinsStream.onError <span class="hljs-built_in">console</span>.log.bind(<span class="hljs-built_in">console</span>)
+      Bacon.combineAsArray(tableStream, proteinsStream)
+        .onEnd(progressIndicator.hide.bind(progressIndicator))
+      @helpButton.<span class="hljs-literal">on</span> <span class="hljs-string">"click"</span>, helpDialog.dialog.show.bind(helpDialog.dialog)
+
+
+      thresholdProperty.debounce(<span class="hljs-number">200</span>)
+          .onValue(@binsMap.setLowThreshold.bind @binsMap)
+
+      progressIndicator.show @mainPanel.domNode
+
+    updateTable: <span class="hljs-function"><span class="hljs-params">(table, proteins, fitness, binSize, synon, nonsynon, beneficial, neutral, detrimental)</span> -&gt;</span>
+      <span class="hljs-keyword">try</span>
+        groupedTable = table.setBinSize binSize, synon, nonsynon, proteins.getRange().min, proteins.getRange().max
+        groupedFitnessTable = fitness.setBinSize binSize, beneficial, neutral, detrimental
+        @binsMap.setData proteins, groupedTable, groupedFitnessTable
+      <span class="hljs-keyword">catch</span> e
+        alert e.message
+        <span class="hljs-built_in">console</span>.log e.stack
+
+    applyFilter: <span class="hljs-function"><span class="hljs-params">(fitness, binSize, beneficial, neutral, detrimental)</span> -&gt;</span>
+      groupedFitnessTable = fitness.setBinSize binSize, beneficial, neutral, detrimental
+      @binsMap.setFitnessInfo groupedFitnessTable
+
+    openNucleotideView: <span class="hljs-function"><span class="hljs-params">(evt)</span> -&gt;</span>
+      nucleotidesMap = <span class="hljs-keyword">new</span> NucleotidesMap({model: @model}) <span class="hljs-keyword">unless</span> nucleotidesMap?
+      nucleotidesMap.show(evt.table, evt.fitnessInfo, evt.threshold, evt)
+
+    openProteinViewer: <span class="hljs-function"><span class="hljs-params">(evt)</span> -&gt;</span>
+      proteinViewer = <span class="hljs-keyword">new</span> ProteinView({model: @model}) <span class="hljs-keyword">unless</span> proteinViewer?
+      proteinViewer.show(evt.table, evt.fitnessInfo, evt.threshold, evt.proteins, evt.protein)
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

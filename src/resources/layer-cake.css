@@ -1,0 +1,36 @@
+.cake rect {
+  fill: none;
+  stroke-width: 1px;
+}
+
+.cake .selection-caret {
+  z-index: -1;
+  stroke: #D3D3D3;
+}
+.cake .selected-cell {
+  fill: none;
+  stroke-width: 1;
+  stroke: blue;
+}
+
+.cake text {
+  font-weight: bold;
+  dominant-baseline: central;
+  font-family: 'Open Sans', sans-serify;
+}
+
+.cake .no-fitness {
+  fill: white;
+}
+.cake .beneficial-fitness {
+  fill: #37b349;
+}
+.cake .neutral-fitness {
+  fill: #00bffa;
+}
+.cake .detrimental-fitness {
+  fill: #0080cb;
+}
+.cake .mixed-fitness {
+  fill: lightgray;
+}

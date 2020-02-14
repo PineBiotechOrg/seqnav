@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>uiUtils.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="LayerCakeApp.html">
+                  LayerCakeApp.coffee
+                </a>
+              
+                
+                <a class="source" href="base.html">
+                  base.coffee
+                </a>
+              
+                
+                <a class="source" href="layercake.profile.html">
+                  layercake.profile.coffee
+                </a>
+              
+                
+                <a class="source" href="uiUtils.html">
+                  uiUtils.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>uiUtils.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define [<span class="hljs-string">"dojo/dom-construct"</span>,
+        <span class="hljs-string">"./utils/Iterator"</span>],
+(domConstruct,
+ Iterator) -&gt;
+<span class="hljs-function">
+  <span class="hljs-title">average</span> = <span class="hljs-params">(x1, x2, alpha)</span> -&gt;</span>
+    res = Math.round(x1 + alpha * (x2 - x1)).toString(<span class="hljs-number">16</span>)
+    <span class="hljs-keyword">switch</span> res.length
+      <span class="hljs-keyword">when</span> <span class="hljs-number">2</span> <span class="hljs-keyword">then</span> res
+      <span class="hljs-keyword">when</span> <span class="hljs-number">1</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"0"</span> + res
+      <span class="hljs-keyword">when</span> <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"00"</span>
+
+  scrollBarWidth = <span class="hljs-literal">undefined</span>
+
+  colors = [<span class="hljs-string">"gray"</span>, <span class="hljs-string">"red"</span>, <span class="hljs-string">"green"</span>, <span class="hljs-string">"gold"</span>, <span class="hljs-string">"violet"</span>, <span class="hljs-string">"orange"</span>, <span class="hljs-string">"cyan"</span>, <span class="hljs-string">"lime"</span>, <span class="hljs-string">"olive"</span>]
+
+  getColor: <span class="hljs-function"><span class="hljs-params">(threshold, variance)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> (variance + <span class="hljs-number">1</span> &lt; <span class="hljs-number">2</span> * threshold)
+      <span class="hljs-string">"#D4D4D4"</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (variance &lt; <span class="hljs-number">0</span>)
+      inverse = -variance
+      <span class="hljs-string">"#"</span> + average(<span class="hljs-number">0xD4</span>, <span class="hljs-number">0xFF</span>, inverse) + average(<span class="hljs-number">0xD4</span>, <span class="hljs-number">0xFF</span>, inverse) + average(<span class="hljs-number">0xD4</span>, <span class="hljs-number">0x00</span>, inverse)
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-string">"#FF"</span> + average(<span class="hljs-number">0xFF</span>, <span class="hljs-number">0x00</span>, variance) + <span class="hljs-string">"00"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>#if (variance &lt; threshold)</p>
+<h1 id="-d4d4d4-">“#D4D4D4”</h1>
+<p>#else if (variance &lt; 0.5 + threshold / 2)</p>
+<h1 id="doublevar-2-variance-threshold-1-threshold-">doublevar = 2 * (variance - threshold) / (1 - threshold)</h1>
+<h1 id="-average-0xd4-0xff-doublevar-average-0xd4-0xff-doublevar-average-0xd4-0x00-doublevar-">“#” + average(0xD4, 0xFF, doublevar) + average(0xD4, 0xFF, doublevar) + average(0xD4, 0x00, doublevar)</h1>
+<p>#else</p>
+<h1 id="-ff-average-0xff-0x00-2-variance-1-threshold-1-threshold-00-">“#FF” + average(0xFF, 0x00, (2 * variance - 1 - threshold) / (1 - threshold)) + “00”</h1>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  getScrollBarWidth: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-keyword">if</span> (scrollBarWidth?)
+      scrollBarWidth
+    <span class="hljs-keyword">else</span>
+      scrollDiv = domConstruct.create(<span class="hljs-string">"div"</span>, {style:
+        width: <span class="hljs-string">"100px"</span>
+        height: <span class="hljs-string">"100px"</span>
+        overflow: <span class="hljs-string">"scroll"</span>
+        position: <span class="hljs-string">"absolute"</span>
+        top: <span class="hljs-string">"-9999px"</span>
+      }, <span class="hljs-built_in">document</span>.body)
+      scrollBarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+      domConstruct.destroy(scrollDiv)
+      scrollBarWidth
+
+  makeColorsIterator: <span class="hljs-function">-&gt;</span> Iterator.repeat colors
+
+  fitnessToColor: <span class="hljs-function"><span class="hljs-params">(f)</span> -&gt;</span> <span class="hljs-keyword">switch</span> (f)
+    <span class="hljs-keyword">when</span> <span class="hljs-string">"B"</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"#37B349"</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-string">"N"</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"#00BFFA"</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-string">"D"</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"#0080CB"</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-literal">undefined</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"gray"</span>
+
+  fillFitnessOut: <span class="hljs-function"><span class="hljs-params">(f, out, index)</span> -&gt;</span> <span class="hljs-keyword">switch</span> (f)
+    <span class="hljs-keyword">when</span> <span class="hljs-string">"B"</span>
+      out[index + <span class="hljs-number">0</span>] = <span class="hljs-number">0x37</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">1</span>] = <span class="hljs-number">0xB3</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">2</span>] = <span class="hljs-number">0x49</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">3</span>] = <span class="hljs-number">1.0</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-string">"N"</span>
+      out[index + <span class="hljs-number">0</span>] = <span class="hljs-number">0.0</span>
+      out[index + <span class="hljs-number">1</span>] = <span class="hljs-number">0xBF</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">2</span>] = <span class="hljs-number">0xFA</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">3</span>] = <span class="hljs-number">1.0</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-string">"D"</span>
+      out[index + <span class="hljs-number">0</span>] = <span class="hljs-number">0.0</span>
+      out[index + <span class="hljs-number">1</span>] = <span class="hljs-number">0x80</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">2</span>] = <span class="hljs-number">0xCB</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">3</span>] = <span class="hljs-number">1.0</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-literal">undefined</span>
+      out[index + <span class="hljs-number">0</span>] = <span class="hljs-number">0xD3</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">1</span>] = <span class="hljs-number">0xD3</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">2</span>] = <span class="hljs-number">0xD3</span> / <span class="hljs-number">255</span>
+      out[index + <span class="hljs-number">3</span>] = <span class="hljs-number">1.0</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

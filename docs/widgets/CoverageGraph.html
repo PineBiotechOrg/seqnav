@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>CoverageGraph.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>CoverageGraph.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>,
+        <span class="hljs-string">"dijit/Tooltip"</span>,
+        <span class="hljs-string">"d3/d3"</span>,
+        <span class="hljs-string">"./../utils/object"</span>, <span class="hljs-string">"./../uiUtils"</span>,
+        <span class="hljs-string">"dojo/i18n!./../nls/base"</span>,
+        <span class="hljs-string">"xstyle/css!./../resources/coverage-graph.css"</span>],
+(declare,
+ Tooltip,
+ d3,
+ object, uiUtils,
+ strings) -&gt;
+
+  GraphTooltip = declare(Tooltip._MasterTooltip, {
+    constructor: <span class="hljs-function"><span class="hljs-params">(obj)</span> -&gt;</span>
+      @elementName = obj.elementName
+
+    lastColumn: <span class="hljs-literal">undefined</span>
+    lastRow: <span class="hljs-literal">undefined</span>
+
+    show2: object.skip(<span class="hljs-number">1</span>, <span class="hljs-function"><span class="hljs-params">(index, names, coverages, x, y)</span> -&gt;</span>
+      rect = {width: <span class="hljs-number">8</span>, height: <span class="hljs-number">8</span>, x: x, y: y}
+      index = <span class="hljs-string">"&lt;div&gt;&lt;b&gt;Coverages for <span class="hljs-subst">#{@elementName}</span> #<span class="hljs-subst">#{index}</span>&lt;/b&gt;&lt;/div&gt;"</span>
+      coverage = <span class="hljs-string">"&lt;div&gt;&lt;b&gt;<span class="hljs-subst">#{strings.coverageGraph.coverage}</span>&lt;/b&gt;: <span class="hljs-subst">#{Math.round(coverage)}</span>&lt;/div&gt;"</span>
+      colors = uiUtils.makeColorsIterator()
+      coveragesHtml = _.reduce(names, <span class="hljs-function"><span class="hljs-params">(z, name, i)</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> (name?)
+          z + <span class="hljs-string">"&lt;div style='color: <span class="hljs-subst">#{colors.next()}</span>'&gt;&lt;b&gt;<span class="hljs-subst">#{name}</span>: &lt;/b&gt; <span class="hljs-subst">#{coverages[i].toFixed(<span class="hljs-number">0</span>)}</span>&lt;/div&gt;"</span>
+        <span class="hljs-keyword">else</span>
+          colors.next()
+          z
+      , <span class="hljs-string">""</span>)
+      @show(<span class="hljs-string">"&lt;div&gt;<span class="hljs-subst">#{index}</span><span class="hljs-subst">#{coveragesHtml}</span>&lt;/div&gt;"</span>, rect, [<span class="hljs-string">"below"</span>, <span class="hljs-string">"above"</span>])
+    )
+  })
+
+  FocusCircle = declare <span class="hljs-literal">null</span>, {
+    constructor: (graphArea, horizontalOffset,
+                  xScale, height,
+                  elementName) -&gt;
+      @xScale = xScale
+      @offset = horizontalOffset
+
+      @focus = graphArea.append(<span class="hljs-string">"line"</span>)
+        .attr(<span class="hljs-string">"x1"</span>, <span class="hljs-number">0</span>).attr(<span class="hljs-string">"y1"</span>, <span class="hljs-number">0</span>)
+        .attr(<span class="hljs-string">"x2"</span>, <span class="hljs-number">0</span>).attr(<span class="hljs-string">"y2"</span>, height)
+        .classed(<span class="hljs-string">"focus-circle"</span>, <span class="hljs-literal">true</span>)
+      @focusRect = graphArea.append(<span class="hljs-string">"rect"</span>)
+        .attr(<span class="hljs-string">"height"</span>, height)
+        .attr(<span class="hljs-string">"x"</span>, horizontalOffset)
+        .classed(<span class="hljs-string">"focus-rect"</span>, <span class="hljs-literal">true</span>)
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"mousemove"</span>, @mouseMoveHandler.bind(@))
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"mouseout"</span>, @hideFocusCircle.bind(@))
+      @tooltip = <span class="hljs-keyword">new</span> GraphTooltip({elementName: elementName})
+      @hideFocusCircle()
+
+    mouseMoveHandler: <span class="hljs-function">-&gt;</span>
+      x0 = @xScale.invert(d3.mouse(@focusRect[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>])[<span class="hljs-number">0</span>] - @offset)
+      i = Math.round(x0)
+      @focus.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{@xScale(i) + @offset}</span>, 0)"</span>)
+      lineCoverages = _.map @data, <span class="hljs-function"><span class="hljs-params">(cs)</span> -&gt;</span> <span class="hljs-keyword">if</span> (cs?) <span class="hljs-keyword">then</span> cs[i] <span class="hljs-keyword">else</span> <span class="hljs-literal">undefined</span>
+      @tooltip.show2 i + @elementOffset, @populations, lineCoverages, d3.event.clientX, d3.event.clientY
+
+    hideFocusCircle: <span class="hljs-function">-&gt;</span>
+      @focus.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(-500, 0)"</span>)
+      @tooltip.hide @tooltip.aroundNode
+
+    setCoverages: <span class="hljs-function"><span class="hljs-params">(populations, allCoverages, elementOffset)</span> -&gt;</span>
+      @populations = populations
+      @data = allCoverages
+      @elementOffset = elementOffset
+
+    setFullWidth: <span class="hljs-function"><span class="hljs-params">(w)</span> -&gt;</span> @focusRect.attr <span class="hljs-string">"width"</span>, w - @offset
+  }
+
+  CoverageGraph = declare <span class="hljs-literal">null</span>, {
+    graphHeight: <span class="hljs-number">80</span>
+
+    constructor: <span class="hljs-function"><span class="hljs-params">(area, labelWidth, elementName)</span> -&gt;</span>
+      @labelWidth = labelWidth
+
+      @mainArea = area
+        .attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(0, 10)"</span>)
+      textElement = area.classed(<span class="hljs-string">"coverage-graph"</span>, <span class="hljs-literal">true</span>)
+        .append(<span class="hljs-string">"text"</span>)
+        .classed(<span class="hljs-string">"name"</span>, <span class="hljs-literal">true</span>)
+      textElement.append(<span class="hljs-string">"tspan"</span>)
+        .text(<span class="hljs-string">"\uF05A"</span>)
+        .classed(<span class="hljs-string">"info-icon"</span>, <span class="hljs-literal">true</span>)
+      textElement.append(<span class="hljs-string">"tspan"</span>)
+        .attr(<span class="hljs-string">"dx"</span>, <span class="hljs-number">4</span>)
+        .text(strings.coverageGraph.coverage)
+      textElement
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"mouseenter"</span>, Tooltip.show.bind(<span class="hljs-literal">null</span>, strings.proteinsBar.proteinsTooltip, textElement[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]))
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"mouseleave"</span>, Tooltip.hide.bind(<span class="hljs-literal">null</span>, textElement[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]))
+      @graphArea = area.append(<span class="hljs-string">"g"</span>)
+        .attr(<span class="hljs-string">"height"</span>, @graphHeight)
+        .attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{labelWidth}</span>, 0)"</span>)
+
+      @xScale = d3.scale.linear()
+      @yScale = d3.scale.linear()
+        .nice()
+        .range([@graphHeight, <span class="hljs-number">0</span>])
+      @yAxis = d3.svg.axis()
+        .scale(@yScale)
+        .ticks([<span class="hljs-number">5</span>])
+        .orient(<span class="hljs-string">"right"</span>)
+      @gAxis = @graphArea.append(<span class="hljs-string">"g"</span>)
+        .attr(<span class="hljs-string">"class"</span>, <span class="hljs-string">"y axis"</span>)
+      @line = d3.svg.line()
+        .x(<span class="hljs-function"><span class="hljs-params">(d, i)</span> =&gt;</span> @xScale(i).toFixed(<span class="hljs-number">2</span>))
+        .y(<span class="hljs-function"><span class="hljs-params">(d, i)</span> =&gt;</span> @yScale(d).toFixed(<span class="hljs-number">2</span>))
+
+      @focusCircle = <span class="hljs-keyword">new</span> FocusCircle @mainArea, @labelWidth, @xScale, @graphHeight, elementName
+
+      <span class="hljs-built_in">window</span>.model.getChosenPassagesBus().onValue @filterLines.bind @
+
+    setData: <span class="hljs-function"><span class="hljs-params">(highestCoverage, populations, allCoverages, elementOffset)</span> -&gt;</span>
+      @populations = populations
+      @chosenCoverages = @allCoverages = allCoverages
+      @elementOffset = elementOffset
+      @xScale.domain [<span class="hljs-number">0</span>, allCoverages[<span class="hljs-number">0</span>].length - <span class="hljs-number">1</span>]
+      @yScale.domain [<span class="hljs-number">0</span>, highestCoverage]
+      @gAxis.call @yAxis
+      @filterLines <span class="hljs-built_in">window</span>.model.getChosenPassages()
+
+    filterLines: <span class="hljs-function"><span class="hljs-params">(filter)</span> -&gt;</span>
+      @chosenCoverages = _.map @allCoverages, <span class="hljs-function"><span class="hljs-params">(x, i)</span> -&gt;</span> <span class="hljs-keyword">if</span> (filter[i]) <span class="hljs-keyword">then</span> x <span class="hljs-keyword">else</span> <span class="hljs-literal">undefined</span>
+      populations = _.map @populations, <span class="hljs-function"><span class="hljs-params">(x, i)</span> -&gt;</span> <span class="hljs-keyword">if</span> (filter[i]) <span class="hljs-keyword">then</span> x <span class="hljs-keyword">else</span> <span class="hljs-literal">undefined</span>
+      @focusCircle.setCoverages populations, @chosenCoverages, @elementOffset
+      @resize @currentSize <span class="hljs-keyword">if</span> (@currentSize)
+
+    resize: <span class="hljs-function"><span class="hljs-params">(s)</span> -&gt;</span>
+      @currentSize = s
+      <span class="hljs-keyword">if</span> (@chosenCoverages)
+        @graphArea.attr(<span class="hljs-string">"width"</span>, s.w)
+        @graphArea.selectAll(<span class="hljs-string">"path"</span>).remove()
+        @xScale.range [<span class="hljs-number">0</span>, s.w - @labelWidth]
+        colors = uiUtils.makeColorsIterator()
+        _.each @chosenCoverages, <span class="hljs-function"><span class="hljs-params">(coverages)</span> =&gt;</span>
+          <span class="hljs-keyword">if</span> (coverages?)
+            @graphArea.append(<span class="hljs-string">"path"</span>)
+              .datum(coverages)
+              .attr(<span class="hljs-string">"class"</span>, <span class="hljs-string">"line"</span>)
+              .style(<span class="hljs-string">"stroke"</span>, colors.next())
+              .attr(<span class="hljs-string">"d"</span>, @line)
+          <span class="hljs-keyword">else</span>
+            colors.next()
+        @gAxis.selectAll(<span class="hljs-string">"line"</span>)
+          .attr(<span class="hljs-string">"x2"</span>, s.w)
+
+      @focusCircle.setFullWidth s.w
+
+    getHeight: <span class="hljs-function">-&gt;</span> @graphHeight + <span class="hljs-number">30</span>
+
+    move: <span class="hljs-function"><span class="hljs-params">(x, y)</span> -&gt;</span> @mainArea.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{x}</span>, <span class="hljs-subst">#{y + <span class="hljs-number">10</span>}</span>)"</span>)
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

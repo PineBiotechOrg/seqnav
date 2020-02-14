@@ -1,0 +1,91 @@
+diff --git a/src/geom.js b/src/geom.js
+index 8689270..a49848a 100644
+--- a/src/geom.js
++++ b/src/geom.js
+@@ -18,7 +18,7 @@
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ // DEALINGS IN THE SOFTWARE.
+ 
+-define(['gl-matrix'], function(glMatrix) {
++define(['./gl-matrix'], function(glMatrix) {
+ "use strict";
+ 
+ var vec3 = glMatrix.vec3;
+diff --git a/src/mol/bond.js b/src/mol/bond.js
+index 6775421..7265c0a 100644
+--- a/src/mol/bond.js
++++ b/src/mol/bond.js
+@@ -18,7 +18,7 @@
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ // DEALINGS IN THE SOFTWARE.
+ 
+-define(['gl-matrix'], function(glMatrix) {
++define(['./../gl-matrix'], function(glMatrix) {
+ 
+ "use strict";
+ 
+diff --git a/src/mol/mol.js b/src/mol/mol.js
+index a50555e..cce05ba 100644
+--- a/src/mol/mol.js
++++ b/src/mol/mol.js
+@@ -18,7 +18,7 @@
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ // DEALINGS IN THE SOFTWARE.
+ 
+-define(['gl-matrix', 'utils', '../geom', './chain', './bond', './select'], 
++define(['./../gl-matrix', './../utils', '../geom', './chain', './bond', './select'], 
+        function(glMatrix, utils, geom, chain, bond, select) {
+ 
+ "use strict";
+diff --git a/src/mol/residue.js b/src/mol/residue.js
+index 70b137c..8282316 100644
+--- a/src/mol/residue.js
++++ b/src/mol/residue.js
+@@ -18,7 +18,7 @@
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ // DEALINGS IN THE SOFTWARE.
+ 
+-define(['gl-matrix', 'utils', './atom'], 
++define(['./../gl-matrix', './../utils', './atom'], 
+        function(glMatrix, utils, atom) {
+ 
+ "use strict";
+diff --git a/src/mol/superpose.js b/src/mol/superpose.js
+index bb1554a..ecc8844 100644
+--- a/src/mol/superpose.js
++++ b/src/mol/superpose.js
+@@ -18,7 +18,7 @@
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ // DEALINGS IN THE SOFTWARE.
+ 
+-define(['gl-matrix', '../svd', 'utils', '../geom', './mol'], 
++define(['./../gl-matrix', '../svd', './../utils', '../geom', './mol'], 
+        function(glMatrix, svd, utils, geom, mol) {
+ 
+ "use strict";
+diff --git a/src/touch.js b/src/touch.js
+index 2d7e96f..bd7c04d 100644
+--- a/src/touch.js
++++ b/src/touch.js
+@@ -18,7 +18,7 @@
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ // DEALINGS IN THE SOFTWARE.
+ 
+-define(['utils'], function(utils) {
++define(['./utils'], function(utils) {
+ "use strict";
+ 
+ function TouchHandler(element, viewer, cam) {
+diff --git a/src/viewpoint.js b/src/viewpoint.js
+index dc4a80e..21f9e58 100644
+--- a/src/viewpoint.js
++++ b/src/viewpoint.js
+@@ -18,7 +18,7 @@
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ // DEALINGS IN THE SOFTWARE.
+ 
+-define(['gl-matrix', 'geom'], function(glMatrix, geom) {
++define(['./gl-matrix', './geom'], function(glMatrix, geom) {
+ 
+ "use strict";
+ 

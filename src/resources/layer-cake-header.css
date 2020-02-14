@@ -1,0 +1,26 @@
+.layer-cake-header rect {
+  stroke-width: 1px;
+}
+.reference-nucleotides .name {
+  font-weight: bold;
+}
+.layer-cake-header text {
+  font-size: 80%;
+  font-family: 'Open Sans', sans-serify;
+}
+.layer-cake-header .name {
+  font-size: 80%;
+  dominant-baseline: central;
+  font-family: 'Open Sans', sans-serify;
+}
+.nucleotide-cells text {
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.aminoacids-cells text {
+  font-size: 80%;
+  font-family: 'Open Sans', sans-sefiry;
+  dominant-baseline: central;
+  text-anchor: middle;
+}

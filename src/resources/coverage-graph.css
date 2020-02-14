@@ -1,0 +1,30 @@
+.coverage-graph .name {
+  font-family: 'Open Sans', sans-serify;
+  font-size: 80%;
+}
+.coverage-graph .line {
+  fill: none;
+  stroke: black;
+}
+
+.coverage-graph .axis text {
+  dominant-baseline: text-after-edge;
+  fill: gray;
+  font-size: 80%;
+}
+.coverage-graph .axis line {
+  stroke: lightgray;
+  stroke-dasharray: 2.2;
+}
+.coverage-graph .axis .domain {
+  fill: none;
+}
+
+.coverage-graph .focus-circle {
+  stroke: gray;
+  stroke-dasharray: 2.2;
+}
+.coverage-graph .focus-rect {
+  fill: none;
+  pointer-events: all;
+}

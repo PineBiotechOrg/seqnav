@@ -1,0 +1,108 @@
+<div class="full-node no-scrollbars layer-cake-app">
+  <div data-dojo-type="dijit/layout/BorderContainer"
+      class="full-node">
+
+    <div data-dojo-type="dijit/layout/ContentPane"
+        data-dojo-props="region:'top'">
+      <table class="table-presentation"><tr><td>
+      <span class="top-bar">
+      <span class="component">
+        </br>
+        <label class="label info-sign"
+            id="${id}-bin-size">${binSize}</label>
+        <span data-dojo-type="dijit/Tooltip"
+            data-dojo-props="connectId:'${id}-bin-size',
+                             label:'${binSizeTooltip}'"></span>
+        <br/>
+        <span data-dojo-type="dijit/form/Select"
+             data-dojo-attach-point="binSize">
+          <option value="s25">25</option>
+          <option value="s50">50</option>
+          <option value="s100" selected="selected">100</option>
+        </span>
+      </span>
+      <span>
+        </br>
+        <span class="separator"></span>
+      </span>
+      <span class="component">
+        </br>
+        <label class="label info-sign"
+            id="${id}-mutation-rate">${mutationRate}</label>
+        <span data-dojo-type="dijit/Tooltip"
+            data-dojo-props="connectId:'${id}-mutation-rate',
+                             label:'${mutationRateTooltip}'"></span>
+        </br>
+        <span data-dojo-type="layercake/widgets/ColorBar"
+            data-dojo-attach-point="colorBar"
+            class="color-bar"></span>
+      </span>
+      <span>
+        </br>
+        <span class="separator"></span>
+      </span>
+      <span class="component">
+        </br>
+        <label class="label info-sign"
+            id="${id}-mutation-type">${mutationType}</label>
+        <span data-dojo-type="dijit/Tooltip"
+            data-dojo-props="connectId:'${id}-mutation-type',
+                             label:'${mutationTypeTooltip}'"></span>
+        </br>
+        <span data-dojo-type="dijit/form/ToggleButton"
+            data-dojo-attach-point="beneficialButton"
+            data-dojo-props="iconClass:'dijitRadioIcon'"
+            class="btn-alt btn-success">${beneficial}</span>
+        <span data-dojo-type="dijit/form/ToggleButton"
+            data-dojo-attach-point="neutralButton"
+            data-dojo-props="iconClass:'dijitRadioIcon'"
+            class="btn-alt btn-info">${neutral}</span>
+        <span data-dojo-type="dijit/form/ToggleButton"
+            data-dojo-attach-point="detrimentalButton"
+            data-dojo-props="iconClass:'dijitRadioIcon'"
+            class="btn-alt btn-primary">${detrimental}</span>
+        <span data-dojo-type="dijit/form/ToggleButton"
+            data-dojo-props="iconClass:'dijitRadioIcon'"
+            class="btn-alt violet-button">${lethal}</span>
+      </span>
+      <span>
+        </br>
+        <span class="separator"></span>
+      </span>
+      <span class="component">
+        </br>
+        <label class="label info-sign"
+            id="${id}-mutation-type2">${mutationType2}</label>
+        <span data-dojo-type="dijit/Tooltip"
+            data-dojo-props="connectId:'${id}-mutation-type2',
+                             label:'${mutationType2Tooltip}'"></span>
+        </br>
+        <span data-dojo-type="dijit/form/ToggleButton"
+            data-dojo-attach-point="synonymousButton"
+            data-dojo-props="iconClass:'dijitRadioIcon',
+                             checked:true">${synonymous}</span>
+        <span data-dojo-type="dijit/form/ToggleButton"
+            data-dojo-attach-point="nonsynonymousButton"
+            data-dojo-props="iconClass:'dijitRadioIcon',
+                             checked:true">${nonsynonymous}</span>
+      </span>
+      </span>
+          </td><td>
+      <span>
+        </br>
+        <button data-dojo-type="dijit/form/Button"
+            data-dojo-attach-point="helpButton"
+            class="help-button">${help}</button>
+      </span>
+          </td></tr></table>
+
+    </div>
+    <div data-dojo-type="dijit/layout/ContentPane"
+        data-dojo-attach-point="mainPanel"
+        data-dojo-props="region:'center'"
+        class="main-panel">
+      <div data-dojo-type="layercake/widgets/BinsMap"
+        data-dojo-attach-point="binsMap"></div>
+    </div>
+  </div>
+</div>

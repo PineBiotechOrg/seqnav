@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Iterator.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="DojoBacon.html">
+                  DojoBacon.coffee
+                </a>
+              
+                
+                <a class="source" href="Iterator.html">
+                  Iterator.coffee
+                </a>
+              
+                
+                <a class="source" href="object.html">
+                  object.coffee
+                </a>
+              
+                
+                <a class="source" href="promise.html">
+                  promise.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>Iterator.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define [<span class="hljs-string">"dojo/_base/declare"</span>],
+<span class="hljs-function"><span class="hljs-params">(declare)</span> -&gt;</span>
+
+  Iterator = declare <span class="hljs-literal">null</span>,
+
+    hasNext: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"abstract"</span>
+
+    next: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"abstract"</span>
+
+    concat: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      result = <span class="hljs-keyword">new</span> Iterator()
+      allIterators = [@].concat(Array.prototype.slice.call(arguments))
+      current = <span class="hljs-number">0</span>
+      result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+        iterator = allIterators[current]
+        <span class="hljs-keyword">if</span> (iterator.hasNext())
+          <span class="hljs-literal">true</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (allIterators.length &lt;= ++current)
+          <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">else</span>
+          @hasNext
+
+      result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+        it = allIterators[current]
+        <span class="hljs-keyword">if</span> (it.hasNext())
+          it.next()
+        <span class="hljs-keyword">else</span>
+          current++
+          @next()
+
+      result
+
+
+    map: <span class="hljs-function"><span class="hljs-params">(func)</span> -&gt;</span>
+      result = <span class="hljs-keyword">new</span> Iterator()
+      result.hasNext = @hasNext.bind(@)
+      result.next = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> func(@next())
+      result
+
+
+    each: <span class="hljs-function"><span class="hljs-params">(func)</span> -&gt;</span>
+      <span class="hljs-keyword">while</span> (@hasNext())
+        func @next()
+
+
+    filter: <span class="hljs-function"><span class="hljs-params">(func)</span> -&gt;</span>
+      result = <span class="hljs-keyword">new</span> Iterator()
+      extracted = <span class="hljs-literal">false</span>
+      last = <span class="hljs-literal">undefined</span>
+
+      result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+        <span class="hljs-keyword">if</span> (extracted)
+          <span class="hljs-literal">true</span>
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">while</span> (@hasNext())
+            n = @next()
+            <span class="hljs-keyword">if</span> (func(n))
+              extracted = <span class="hljs-literal">true</span>
+              last = n
+              <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+          <span class="hljs-literal">false</span>
+
+      result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> (@hasNext())
+          extracted = <span class="hljs-literal">false</span>
+          last
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"filter: empty iterator"</span>
+
+      result
+
+
+    take: <span class="hljs-function"><span class="hljs-params">(n)</span> -&gt;</span>
+      result = <span class="hljs-keyword">new</span> Iterator()
+      i = <span class="hljs-number">0</span>
+
+      result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> @hasNext() <span class="hljs-keyword">and</span> i &lt; n
+      result.next = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+        i++
+        @next()
+
+      result
+
+
+    takeWhile: <span class="hljs-function"><span class="hljs-params">(func)</span> -&gt;</span>
+      result = <span class="hljs-keyword">new</span> Iterator()
+      last = <span class="hljs-literal">undefined</span>
+      extracted = <span class="hljs-literal">false</span>
+      terminated = <span class="hljs-literal">false</span>
+
+      result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+        <span class="hljs-keyword">if</span> (extracted)
+          <span class="hljs-literal">true</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (terminated <span class="hljs-keyword">or</span> !@hasNext())
+          <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">else</span>
+          last = @next()
+          <span class="hljs-keyword">if</span> (func(last))
+            extracted = <span class="hljs-literal">true</span>
+            <span class="hljs-literal">true</span>
+          <span class="hljs-keyword">else</span>
+            terminated = <span class="hljs-literal">true</span>
+            <span class="hljs-literal">false</span>
+
+      result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> (extracted <span class="hljs-keyword">or</span> @hasNext())
+          extracted = <span class="hljs-literal">false</span>
+          last
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"takeWhile: empty iterator"</span>
+
+      result
+
+
+    drop: <span class="hljs-function"><span class="hljs-params">(n)</span> -&gt;</span>
+      i = <span class="hljs-number">0</span>
+      <span class="hljs-keyword">while</span> (i++ &lt; n)
+        @next()
+      @
+
+
+    dropWhile: <span class="hljs-function"><span class="hljs-params">(func)</span> -&gt;</span>
+      i = <span class="hljs-number">0</span>
+      <span class="hljs-keyword">while</span> (@hasNext())
+        last = @next()
+        <span class="hljs-keyword">if</span> (!func(last))
+          <span class="hljs-keyword">return</span> Iterator.single(last).concat(@)
+
+      Iterator.emptyIterator
+
+
+    sliding: <span class="hljs-function"><span class="hljs-params">(size, step)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (size <span class="hljs-keyword">isnt</span> step)
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"Not implemted!"</span>
+
+      result = <span class="hljs-keyword">new</span> Iterator()
+      result.hasNext = @hasNext.bind(@)
+      result.next = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+        arr = []
+        i = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> (i++ &lt; size <span class="hljs-keyword">and</span> @hasNext())
+          arr.push @next()
+        arr
+      result
+
+
+    toArray: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      result = []
+      <span class="hljs-keyword">while</span> (@hasNext())
+        result.push @next()
+      result
+
+
+  Iterator.single = <span class="hljs-function"><span class="hljs-params">(obj)</span> -&gt;</span>
+    result = <span class="hljs-keyword">new</span> Iterator()
+    hasNext = <span class="hljs-literal">true</span>
+    result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> hasNext
+    result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (!hasNext) <span class="hljs-keyword">then</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"empty: singleiterator"</span>
+      hasNext = <span class="hljs-literal">false</span>
+      obj
+    result
+
+
+  Iterator.fromArray = <span class="hljs-function"><span class="hljs-params">(arr)</span> -&gt;</span>
+    result = <span class="hljs-keyword">new</span> Iterator()
+    i = <span class="hljs-number">0</span>
+    result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> i &lt; arr.length
+    result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> arr[i++]
+    result
+
+
+  Iterator.fill = <span class="hljs-function"><span class="hljs-params">(obj, n)</span> -&gt;</span>
+    result = <span class="hljs-keyword">new</span> Iterator()
+    i = <span class="hljs-number">0</span>
+    result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> i &lt; n
+    result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      i++
+      obj
+    result
+
+
+  Iterator.range = <span class="hljs-function"><span class="hljs-params">(min, max)</span> -&gt;</span>
+    result = <span class="hljs-keyword">new</span> Iterator()
+    i = min
+    result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> i &lt;= max
+    result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> i++
+    result
+
+
+  ei = Iterator.emptyIterator = <span class="hljs-keyword">new</span> Iterator()
+  ei.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> <span class="hljs-literal">false</span>
+  ei.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"empty iterator"</span>
+
+
+  Iterator.splitString = <span class="hljs-function"><span class="hljs-params">(str, separator)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> (str.length <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>)
+      <span class="hljs-keyword">return</span> Iterator.emptyIterator
+    <span class="hljs-keyword">else</span>
+      currentIndex = <span class="hljs-keyword">if</span> (str.lastIndexOf(separator, <span class="hljs-number">0</span>) <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>) <span class="hljs-keyword">then</span> separator.length <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+      result = <span class="hljs-keyword">new</span> Iterator()
+      result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> currentIndex &lt; str.length
+      result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+        nextIndex = str.indexOf(separator, currentIndex)
+        result = <span class="hljs-literal">undefined</span>
+        <span class="hljs-keyword">if</span> (nextIndex <span class="hljs-keyword">is</span> <span class="hljs-number">-1</span>)
+          result = str.substr(currentIndex)
+          currentIndex = str.length
+        <span class="hljs-keyword">else</span>
+          result = str.substr(currentIndex, nextIndex - currentIndex)
+          currentIndex = nextIndex + separator.length
+        result
+      result
+
+  Iterator.repeat = <span class="hljs-function"><span class="hljs-params">(arr, n)</span> -&gt;</span>
+    i = <span class="hljs-number">0</span>
+    j = <span class="hljs-number">0</span>
+    n = n || Number.MAX_VALUE
+    result = <span class="hljs-keyword">new</span> Iterator()
+    result.hasNext = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> (i &lt; n) <span class="hljs-keyword">or</span> (i <span class="hljs-keyword">is</span> n <span class="hljs-keyword">and</span> j &lt; arr.length)
+    result.next = <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      result = arr[j]
+      j++
+      <span class="hljs-keyword">if</span> (j <span class="hljs-keyword">is</span> arr.length)
+        i++
+        j = <span class="hljs-number">0</span>
+      result
+    result
+
+  Iterator</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

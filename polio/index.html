@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>SeqNav: Polio</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta charset="UTF-8">
+
+  <style type="text/css">
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+  <script src="../javascript/dtk/dojo/dojo.js"
+      data-dojo-config="async: true,
+                packages: [{name: 'dojo', location: '../dojo'},
+                           {name: 'dijit', location: '../dijit'},
+                           {name: 'dojox', location: '../dojox'},
+                           {name: 'xstyle', location: '../../libs/xstyle'},
+                           {name: 'bacon', location: '../../libs/bacon'},
+                           {name: 'underscore', location: '../../libs/underscore'},
+                           {name: 'd3', location: '../../libs/d3'},
+                           {name: 'pv', location: '../../libs/pv/src'},
+                           {name: 'dojo-theme-flat', location: '../../libs/dojo-theme-flat'},
+                           {name: 'uiec-common', location: '../../libs/common'},
+                           {name: 'layercake', location: '../../layercake'}],
+                parseOnLoad: true"></script>
+
+  <script type="text/javascript">
+    require(["layercake/base"],
+            require.bind(null, ["layercake/LayerCakeApp"]));
+  </script>
+
+<script type="text/javascript">
+   var mtfiles =  {"SRR1036477": "./static/mts/p1.mt",
+                   "SRR1036617": "./static/mts/p2.mt",
+                   "SRR1036661": "./static/mts/p3.mt",
+                   "SRR1036663": "./static/mts/p4.mt",
+                   "SRR1036988": "./static/mts/p5.mt",
+                   "SRR1036989": "./static/mts/p6.mt",
+                   "SRR1036990": "./static/mts/p7.mt"};
+   var refiles = {"file": "./static/proteins/Polio.csv"};
+   var pdbpath = {"2Aproteinase.pdb": "./static/pdbs/2Aproteinase",
+                  "2B.pdb": "./static/pdbs/2B",
+                  "2C.pdb": "./static/pdbs/2C",
+                  "3Aprotein.pdb": "./static/pdbs/3Aprotein",
+                  "3Cprotease.pdb": "./static/pdbs/3Cprotease",
+                  "3Dpolymerase.pdb": "./static/pdbs/3Dpolymerase",
+                  "VP1-VP2CoatProtein.pdb": "./static/pdbs/VP1-VP2CoatProtein",
+                  "VP1,VP2,VP3,VP4.pdb": "./static/pdbs/VP1-VP2-VP3-VP4",
+                  "VPg.pdb": "./static/pdbs/VPg"};
+   var txtfiles = {"bayes": "./static/bayes/Binom_fitnessBR-4.txt",
+                   "stopcodon": "./static/bayes/PV1StopCodon.txt"};
+ </script>
+</head>
+
+<body class="claro layer-cake-app">
+  <div data-dojo-type="layercake/LayerCakeApp"></div>
+</body>
+</html>

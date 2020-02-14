@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>NucleotidesMap.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>NucleotidesMap.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/dom-geometry"</span>, <span class="hljs-string">"dojo/dom-style"</span>,
+        <span class="hljs-string">"dijit/_Widget"</span>, <span class="hljs-string">"dijit/_TemplatedMixin"</span>, <span class="hljs-string">"dijit/_WidgetsInTemplateMixin"</span>,
+        <span class="hljs-string">"d3/d3"</span>,
+        <span class="hljs-string">"./NucleotidesLayerCakeHeader"</span>, <span class="hljs-string">"./BinLayerCakeHeader"</span>, <span class="hljs-string">"./LayerCake"</span>, <span class="hljs-string">"./CoverageGraph"</span>, <span class="hljs-string">"./nucleotidesTooltip"</span>,
+        <span class="hljs-string">"./../uiUtils"</span>,
+        <span class="hljs-string">"dojo/text!./../templates/NucleotidesMap.html"</span>,
+        <span class="hljs-string">"dojo/i18n!./../nls/base"</span>,
+        <span class="hljs-string">"./StackDialog"</span>, <span class="hljs-string">"dijit/layout/BorderContainer"</span>, <span class="hljs-string">"dijit/layout/ContentPane"</span>, <span class="hljs-string">"dijit/form/Button"</span>,
+        <span class="hljs-string">"xstyle/css!./../resources/nucleotides-map.css"</span>],
+(declare, lang, domGeometry, domStyle,
+ _Widget, _TemplatedMixin, _WidgetsInTemplateMixin,
+ d3,
+ NucleotidesLayerCakeHeader, BinLayerCakeHeader, LayerCake, CoverageGraph, tooltip,
+ uiUtils,
+ template,
+ strings) -&gt;
+
+  firstTime = <span class="hljs-literal">true</span>
+
+  declare [_Widget, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    templateString: template,
+
+    labelWidth: <span class="hljs-number">100</span>
+
+    constructor: <span class="hljs-function">-&gt;</span>
+      lang.mixin @, strings.nucleotidesMap
+
+    postCreate: <span class="hljs-function">-&gt;</span>
+      @inherited arguments
+      @dialog.backButton.<span class="hljs-literal">on</span> <span class="hljs-string">"click"</span>, @nextOrBackButtonHandler.bind @, <span class="hljs-literal">false</span>
+      @dialog.nextButton.<span class="hljs-literal">on</span> <span class="hljs-string">"click"</span>, @nextOrBackButtonHandler.bind @, <span class="hljs-literal">true</span>
+      @dialog.<span class="hljs-literal">on</span> <span class="hljs-string">"hide"</span>, @hideDialog.bind @
+
+      topArea = d3.select @headerSvgArea
+      @binsBar = <span class="hljs-keyword">new</span> BinLayerCakeHeader(topArea.append(<span class="hljs-string">"g"</span>), @labelWidth, <span class="hljs-literal">true</span>)
+      @coverageGraph = <span class="hljs-keyword">new</span> CoverageGraph topArea.append(<span class="hljs-string">"g"</span>), @labelWidth, strings.nucleotidesMap.tooltipIndex
+      offset = @binsBar.getHeight()
+      @coverageGraph.move(<span class="hljs-number">0</span>, offset)
+      @layerCakeHeader = <span class="hljs-keyword">new</span> NucleotidesLayerCakeHeader(topArea.append(<span class="hljs-string">"g"</span>), @labelWidth)
+      offset += @coverageGraph.getHeight()
+      @layerCakeHeader.move(<span class="hljs-number">0</span>, offset)
+      offset += @layerCakeHeader.getHeight()
+      @topPane.resize {h: offset}
+      centerArea = d3.select @centerSvgArea
+      @cake = <span class="hljs-keyword">new</span> LayerCake(@domNode, centerArea.append(<span class="hljs-string">"g"</span>), @labelWidth,
+                            <span class="hljs-function">(<span class="hljs-params">(x)</span> -&gt;</span> x.nucleotidesCounter), <span class="hljs-function">(<span class="hljs-params">(x)</span> -&gt;</span> x.populationIndex), <span class="hljs-function">(<span class="hljs-params">(x)</span> -&gt;</span> x.variance),
+                            <span class="hljs-string">"cell"</span>)
+      @cake.<span class="hljs-literal">on</span> <span class="hljs-string">"mouseMove"</span>, @mouseMoveHandler.bind @
+      @centerPane.<span class="hljs-literal">on</span> <span class="hljs-string">"mouseLeave"</span>, @centerPaneMouseLeaveHandler.bind(@)
+
+    show: <span class="hljs-function"><span class="hljs-params">(groupedTable, fitnessInfo, threshold, evt)</span> -&gt;</span>
+      @groupedTable = groupedTable
+      @fitnessInfo = fitnessInfo
+      @currentBin = evt.column
+      @binsBar.setData groupedTable.getAverages(), groupedTable.getNucleotidesRange()
+      @dialog.show()
+
+      <span class="hljs-keyword">if</span> (firstTime)
+        centerPaneSize = domGeometry.position @centerPane.domNode
+        withoutScrollBarSize = {w: centerPaneSize.w - uiUtils.getScrollBarWidth(), h: centerPaneSize.h}
+        @binsBar.resize withoutScrollBarSize
+        @layerCakeHeader.resize withoutScrollBarSize
+        @coverageGraph.resize withoutScrollBarSize
+        @cake.resize withoutScrollBarSize
+        @mainContainer.layout()
+        firstTime = <span class="hljs-literal">false</span>
+
+      @updateState()
+      domStyle.set(@centerSvgArea, <span class="hljs-string">"height"</span>, @cake.getHeight() + <span class="hljs-string">"px"</span>)
+      @cake.setLowThreshold(threshold / <span class="hljs-number">100</span>)
+
+    nextOrBackButtonHandler: <span class="hljs-function"><span class="hljs-params">(next)</span> -&gt;</span>
+      @currentBin += (<span class="hljs-keyword">if</span> (next) <span class="hljs-keyword">then</span> +<span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-number">-1</span>)
+      @updateState()
+
+    updateState: <span class="hljs-function">-&gt;</span>
+      t = @groupedTable.makeNucleotidesTable @currentBin
+      nucleotides = t.getReferenceNucleotides()
+
+      @layerCakeHeader.setData nucleotides
+      @coverageGraph.setData t.getHighCoverage(), t.getPopulations(), t.getAllCoverages(), t.getNormalizedTable()[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>].nucleotide
+
+      slicedFitnessTable = @fitnessInfo.makeNucleotidesTable @currentBin
+      @cake.setData @groupedTable.getPopulations(), t.getNormalizedTable(), slicedFitnessTable, nucleotides.length
+
+      @binsBar.setSelection @currentBin
+      @dialog.backButton.set <span class="hljs-string">"disabled"</span>, @currentBin <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>
+      @dialog.nextButton.set <span class="hljs-string">"disabled"</span>, @currentBin + <span class="hljs-number">1</span> <span class="hljs-keyword">is</span> @groupedTable.getBinCount()
+      tooltip.hide tooltip.aroundNode
+
+    mouseMoveHandler: <span class="hljs-function"><span class="hljs-params">(e)</span> -&gt;</span> tooltip.show2 e.column, e.row, e.d, lang.mixin({width: @cake.cellWidth, height: @cake.cellHeight}, e.rect), [<span class="hljs-string">"below"</span>]
+
+    centerPaneMouseLeaveHandler: <span class="hljs-function">-&gt;</span>
+      @cake.hideSelectionCaret()
+      tooltip.hide tooltip.aroundNode
+
+    hideDialog: <span class="hljs-function">-&gt;</span>
+      @dialog.hide()
+      tooltip.hide tooltip.aroundNode
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

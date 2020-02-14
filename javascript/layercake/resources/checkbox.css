@@ -1,0 +1,13 @@
+.check-box {
+  cursor: pointer;
+}
+.check-box rect {
+  stroke: #000000;
+  stroke-width: 1;
+  fill: white;
+}
+
+.check-box polygon {
+  fill: gray;
+  stroke-miterlimit: 10;
+}

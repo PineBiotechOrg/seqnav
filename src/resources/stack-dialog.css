@@ -1,0 +1,21 @@
+.stack-dialog-back-button,
+.stack-dialog-next-button {
+  position: absolute;
+  z-index: 950;
+}
+
+.stack-dialog-back-button .dijitButtonNode,
+.stack-dialog-next-button .dijitButtonNode {
+  height: 5em;
+  width: 1.4em;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: none;
+  background-image: url('./arrow.png');
+  background-position: 135px;
+}
+.stack-dialog-back-button .dijitButtonNode {
+  transform: rotate(180deg);
+}

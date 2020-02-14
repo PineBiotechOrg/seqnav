@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>layercake.profile.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="LayerCakeApp.html">
+                  LayerCakeApp.coffee
+                </a>
+              
+                
+                <a class="source" href="base.html">
+                  base.coffee
+                </a>
+              
+                
+                <a class="source" href="layercake.profile.html">
+                  layercake.profile.coffee
+                </a>
+              
+                
+                <a class="source" href="uiUtils.html">
+                  uiUtils.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>layercake.profile.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">profile</span> = (<span class="hljs-params">()</span> -&gt;</span>
+<span class="hljs-function">  <span class="hljs-title">copyOnly</span> = <span class="hljs-params">(filename, mid)</span> -&gt;</span>
+    list = {}
+    (mid <span class="hljs-keyword">of</span> list) <span class="hljs-keyword">or</span> (<span class="hljs-regexp">/\/resources\//</span>.test(mid) <span class="hljs-keyword">and</span> !<span class="hljs-regexp">/\.css$/</span>.test(filename)) <span class="hljs-keyword">or</span> <span class="hljs-regexp">/(png|jpg|jpeg|gif)$/</span>.test(filename)
+
+  basePath: <span class="hljs-string">"./../"</span>
+  releaseDir: <span class="hljs-string">"../dist"</span>
+  action: <span class="hljs-string">"release"</span>
+  cssOptimize: <span class="hljs-string">"comments"</span>
+  mini: <span class="hljs-literal">false</span>
+  optimize: <span class="hljs-string">"shrinksafe"</span>
+  layerOptimize: <span class="hljs-string">"shrinksafe"</span>
+  stripConsole: <span class="hljs-string">"all"</span>
+  selectorEngine: <span class="hljs-string">"lite"</span>
+
+  packages: [
+    {name: <span class="hljs-string">"dojo"</span>, location: <span class="hljs-string">"dtk/dojo"</span>, destLocation: <span class="hljs-string">"dtk/dojo"</span>}
+    {name: <span class="hljs-string">"dijit"</span>, location: <span class="hljs-string">"dtk/dijit"</span>, destLocation: <span class="hljs-string">"dtk/dijit"</span>}
+    {name: <span class="hljs-string">"dojox"</span>, location: <span class="hljs-string">"dtk/dojox"</span>, destLocation: <span class="hljs-string">"dtk/dojox"</span>}
+    {name: <span class="hljs-string">"bacon"</span>, location: <span class="hljs-string">"libs/bacon.js"</span>, destLocation: <span class="hljs-string">"libs/bacon.js"</span>}
+    {name: <span class="hljs-string">"xstyle"</span>, location: <span class="hljs-string">"libs/xstyle"</span>, destLocation: <span class="hljs-string">"libs/xstyle"</span>}
+    {name: <span class="hljs-string">"underscore"</span>, location: <span class="hljs-string">"libs/underscore"</span>, destLocation: <span class="hljs-string">"libs/underscore"</span>}
+    {name: <span class="hljs-string">"d3"</span>, location: <span class="hljs-string">"libs/d3"</span>, destLocation: <span class="hljs-string">"libs/d3"</span>}
+    {name: <span class="hljs-string">"dojo-theme-flat"</span>, location: <span class="hljs-string">"libs/dojo-theme-flat"</span>, destLocation: <span class="hljs-string">"libs/dojo-theme-flat"</span>}
+    {name: <span class="hljs-string">"pv"</span>, location: <span class="hljs-string">"libs/pv/src"</span>, destLocation: <span class="hljs-string">"libs/pv/src"</span>}
+    {name: <span class="hljs-string">"layercake"</span>, location: <span class="hljs-string">"layercake"</span>}
+  ]
+
+  plugins:
+    <span class="hljs-string">"xstyle/css"</span>: <span class="hljs-string">"xstyle/build/amd-css"</span>
+
+  resourceTags:
+    copyOnly: copyOnly
+    amd: <span class="hljs-function"><span class="hljs-params">(filename, mid)</span> -&gt;</span> <span class="hljs-keyword">not</span> copyOnly(filename, mid) <span class="hljs-keyword">and</span> <span class="hljs-regexp">/\.js$/</span>.test(filename)
+    declarative: <span class="hljs-function"><span class="hljs-params">(filename)</span> -&gt;</span> <span class="hljs-regexp">/\.html?$/</span>.test(filename)
+
+  layers:
+    <span class="hljs-string">"layercake/base"</span>:
+      include: [<span class="hljs-string">"layercake/LayerCakeApp"</span>, <span class="hljs-string">"dojo/selector/acme"</span>]
+      includeLocales: [<span class="hljs-string">"en-us"</span>]
+      customBase: <span class="hljs-literal">true</span>
+    <span class="hljs-string">"layercake/resources/base"</span>:
+      name: <span class="hljs-string">"layercake/LayerCakeApp.js"</span>
+      targetStylesheet: <span class="hljs-string">"layercake/resources/layer-cake-app.css"</span>
+)()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>AppModel.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Aminoacids.html">
+                  Aminoacids.coffee
+                </a>
+              
+                
+                <a class="source" href="AppModel.html">
+                  AppModel.coffee
+                </a>
+              
+                
+                <a class="source" href="Fitness.html">
+                  Fitness.coffee
+                </a>
+              
+                
+                <a class="source" href="Proteins.html">
+                  Proteins.coffee
+                </a>
+              
+                
+                <a class="source" href="Table.html">
+                  Table.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>AppModel.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/json"</span>, <span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-string">"dojo/promise/all"</span>,
+        <span class="hljs-string">"dojo/request"</span>, <span class="hljs-string">"pv/io"</span>,
+        <span class="hljs-string">"bacon/dist/Bacon"</span>,
+        <span class="hljs-string">"underscore/underscore"</span>, <span class="hljs-string">"./../utils/Iterator"</span>,
+        <span class="hljs-string">"./Table"</span>, <span class="hljs-string">"./Proteins"</span>, <span class="hljs-string">"./Fitness"</span>],
+(declare, lang, JSON, Deferred, all,
+ request, io,
+ Bacon,
+ _, Iterator,
+ Table, Proteins, Fitness) -&gt;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Returns fuction each next call returns next cell of table. In general it does what
+str.split(separator) does. But this function has two advantages:
+(1) it takes into account that cells in CSV file can be escaped by quotes:
+       1,”asdf,asdf”,123
+    This function parses three cells: 1 asdf,asfd 123
+(2) it is faster because parses only necessary cells rather then all. Also doesn’t
+    create additional arrays.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">  <span class="hljs-title">rowParser</span> = <span class="hljs-params">(separator, str)</span> -&gt;</span>
+    i = <span class="hljs-number">0</span>
+    -&gt;
+      j = i
+      length = str.length
+      insideQuotes = <span class="hljs-literal">false</span>
+      wasInQuotes = <span class="hljs-literal">false</span>
+      ch = <span class="hljs-literal">undefined</span>
+      <span class="hljs-keyword">while</span> j &lt; length <span class="hljs-keyword">and</span> (((ch = str.charAt(j)) <span class="hljs-keyword">isnt</span> separator) <span class="hljs-keyword">or</span> insideQuotes)
+        <span class="hljs-keyword">if</span> (ch <span class="hljs-keyword">is</span> <span class="hljs-string">'"'</span>)
+          insideQuotes = !insideQuotes
+          wasInQuotes = <span class="hljs-literal">true</span>
+        j++
+
+      <span class="hljs-keyword">if</span> (j <span class="hljs-keyword">is</span> length)
+        <span class="hljs-keyword">if</span> (i &lt; j)
+          result = <span class="hljs-keyword">if</span> (wasInQuotes) <span class="hljs-keyword">then</span> str.substring i + <span class="hljs-number">1</span>, str.length - <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> str.substring i
+          i = length
+          result
+        <span class="hljs-keyword">else</span>
+          i = j
+          <span class="hljs-literal">undefined</span>
+      <span class="hljs-keyword">else</span>
+        result = str.substring i, j
+        i = j + <span class="hljs-number">1</span>
+        result</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Next two functions are temporary. Just in order to run layercake in my environment. Must be removed at the end.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">  <span class="hljs-title">makeUrl</span> = <span class="hljs-params">(url)</span> -&gt;</span> <span class="hljs-string">"/api/<span class="hljs-subst">#{url}</span>"</span>
+<span class="hljs-function">
+  <span class="hljs-title">mkDefaultArguments</span> = <span class="hljs-params">()</span> -&gt;</span>
+    handleAs: <span class="hljs-string">"json"</span>
+    headers: {<span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"application/json; charset=utf-8"</span>}
+    preventCache: <span class="hljs-literal">true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Hardcoded for now. Must be removed when Vivek will add service which returns passage names.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  passages = [<span class="hljs-string">"SRR1036477"</span>, <span class="hljs-string">"SRR1036617"</span>, <span class="hljs-string">"SRR1036661"</span>, <span class="hljs-string">"SRR1036663"</span>, <span class="hljs-string">"SRR1036988"</span>, <span class="hljs-string">"SRR1036989"</span>, <span class="hljs-string">"SRR1036990"</span>]
+
+  declare(<span class="hljs-literal">null</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Is array with true/false for each passage. If value for some passage is true then corresponded checkbox
+is checked and line in chart is not hidden.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    @chosenPopulations: <span class="hljs-literal">undefined</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>EventStream (see <a href="https://baconjs.github.io/api.html">https://baconjs.github.io/api.html</a>) with array chosenPopulations.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    @chosenPopulationsBus: <span class="hljs-literal">undefined</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>TK: Pipelines Virology is hardcoded here, why?
+DB: Because I need to parse page id from URL /pipelinesvirology/XXXXXX/asdf. Number XXXXXX is used in another
+    calls.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    constructor: <span class="hljs-function">-&gt;</span>
+      @key = parseInt(location.pathname.substring(<span class="hljs-string">"/pipelinesvirology/"</span>.length))
+      @chosenPopulationsBus = <span class="hljs-keyword">new</span> Bacon.Bus()
+      @chosenPopulations = []
+
+    loadNucleotides: <span class="hljs-function">-&gt;</span>
+      request.get(<span class="hljs-string">"/visualisation/csv_input/"</span> + <span class="hljs-keyword">this</span>.key).<span class="hljs-keyword">then</span>(<span class="hljs-function"><span class="hljs-params">(str)</span> -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>request.get(makeUrl(“populations”), mkDefaultArguments()).then((str) -&gt;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        nucleotidesIterator = Iterator.splitString(str, <span class="hljs-string">"\r\n"</span>)
+        nucleotidesIterator.next()
+        <span class="hljs-keyword">new</span> Table(nucleotidesIterator, rowParser.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">","</span>))
+      )
+
+    loadPassages: <span class="hljs-function">-&gt;</span>
+      all(_.map(passages, <span class="hljs-function"><span class="hljs-params">(p)</span> -&gt;</span> request.get(makeUrl(<span class="hljs-string">"passage?fileName=<span class="hljs-subst">#{p}</span>"</span>), mkDefaultArguments()))).<span class="hljs-keyword">then</span>(<span class="hljs-function"><span class="hljs-params">(arr)</span> =&gt;</span>
+        iterators = _.map(arr, <span class="hljs-function"><span class="hljs-params">(fileContent, i)</span> -&gt;</span>
+           {passageName: passages[i], it: Iterator.splitString(fileContent, <span class="hljs-string">"\n"</span>)}
+        )
+        @chosenPopulations = Iterator.range(<span class="hljs-number">1</span>, arr.length).map(<span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> <span class="hljs-literal">true</span>).toArray()
+        @chosenPopulationsBus.push @chosenPopulations
+        <span class="hljs-keyword">new</span> Table(iterators, rowParser.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">"\t"</span>))
+      )
+
+    loadProteins: <span class="hljs-function">-&gt;</span>
+      request.get(<span class="hljs-string">"/visualisation/csv_reference/"</span> + <span class="hljs-keyword">this</span>.key).<span class="hljs-keyword">then</span>(<span class="hljs-function"><span class="hljs-params">(str)</span> -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>request.get(makeUrl(“proteins”), mkDefaultArguments()).then((str) -&gt;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        proteinsIterator = Iterator.splitString(str, <span class="hljs-string">"\n"</span>)
+        proteinsIterator.next()
+        <span class="hljs-keyword">new</span> Proteins(proteinsIterator, rowParser.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">","</span>))
+      )</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>TK: So is this just loading /api/fitness? Do you already have an example file for input?
+DB: Yes, just loads fitness.txt files. I have this file only on my server. Vivek’s server doesn’t have this yet.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    loadFitness: <span class="hljs-function">-&gt;</span>
+      request.get(makeUrl(<span class="hljs-string">"fitness"</span>), mkDefaultArguments()).<span class="hljs-keyword">then</span>(<span class="hljs-function"><span class="hljs-params">(str)</span> -&gt;</span>
+        nucleotidesIterator = Iterator.splitString(str, <span class="hljs-string">"\n"</span>)
+        <span class="hljs-keyword">new</span> Fitness(nucleotidesIterator, rowParser.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">"\t"</span>))
+      )
+
+    loadPdb: <span class="hljs-function"><span class="hljs-params">(name)</span> -&gt;</span>
+      dfd = <span class="hljs-keyword">new</span> Deferred()
+      <span class="hljs-keyword">if</span> (name)
+        io.fetchPdb <span class="hljs-string">"/visualisation-files/pdb_<span class="hljs-subst">#{@key}</span>/<span class="hljs-subst">#{name}</span>.pdb"</span>, dfd.resolve.bind(dfd)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>io.fetchPdb “../javascript/pdbs/#{name}.pdb”, dfd.resolve.bind(dfd)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span>
+        dfd.reject(<span class="hljs-string">"Protein not found"</span>)
+      dfd.promise</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Just getter for @chosenPopulations</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getChosenPassages: <span class="hljs-function">-&gt;</span> @chosenPopulations</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Just getter for @chosenPopulationsBus</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getChosenPassagesBus: <span class="hljs-function">-&gt;</span> @chosenPopulationsBus</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>When user checks/unchecks checkbox in layercake and corresponded line in CoverageGraph must be showed/hidden,
+this method must be called. It updates chosenPopulationsBus and updated value goes to all dialogs and all charts.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    updatePassage: <span class="hljs-function"><span class="hljs-params">(idx, newVal)</span> -&gt;</span>
+      @chosenPopulations = _.map @chosenPopulations, <span class="hljs-function"><span class="hljs-params">(val, i)</span> -&gt;</span> <span class="hljs-keyword">if</span> i <span class="hljs-keyword">is</span> idx <span class="hljs-keyword">then</span> newVal <span class="hljs-keyword">else</span> val
+      @chosenPopulationsBus.push @chosenPopulations
+  )
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

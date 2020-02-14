@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>nucleotidesTooltip.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>nucleotidesTooltip.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>,
+        <span class="hljs-string">"dijit/Tooltip"</span>,
+        <span class="hljs-string">"underscore/underscore"</span>
+        <span class="hljs-string">"./../model/Table"</span>,
+        <span class="hljs-string">"dojo/i18n!./../nls/base"</span>],
+(declare, lang,
+ Tooltip,
+ _,
+ Table,
+ strings) -&gt;
+
+  tooltipTemplate = [
+    {name: <span class="hljs-string">"A"</span>, className: <span class="hljs-string">"green"</span>}
+    {name: <span class="hljs-string">"C"</span>, className: <span class="hljs-string">"violet"</span>}
+    {name: <span class="hljs-string">"G"</span>, className: <span class="hljs-string">"blue"</span>}
+    {name: <span class="hljs-string">"T"</span>, className: <span class="hljs-string">"yellow"</span>}
+  ]
+
+  declare(Tooltip._MasterTooltip, {
+
+    lastColumn: <span class="hljs-literal">undefined</span>
+    lastRow: <span class="hljs-literal">undefined</span>
+
+    show2: <span class="hljs-function"><span class="hljs-params">(column, row, pairs, rect, position)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (column <span class="hljs-keyword">isnt</span> @lastColumn <span class="hljs-keyword">or</span> row <span class="hljs-keyword">isnt</span> @lastRow)
+        nucleotideToPair = _.indexBy pairs, <span class="hljs-string">"varNucleotide"</span>
+        total = _.reduce pairs, <span class="hljs-function">(<span class="hljs-params">(z, p)</span> -&gt;</span> z + p.count), <span class="hljs-number">0</span>
+        notMutatedCount = nucleotideToPair[pairs[<span class="hljs-number">0</span>].refNucleotide]?.count || <span class="hljs-number">0</span>
+        variability = <span class="hljs-keyword">if</span> (total <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>) <span class="hljs-keyword">then</span> <span class="hljs-string">"N/A"</span> <span class="hljs-keyword">else</span> ((total) / total * <span class="hljs-number">100</span>).toFixed(<span class="hljs-number">2</span>) + <span class="hljs-string">"%"</span>
+
+        sequenceDiv = <span class="hljs-string">"&lt;div&gt;<span class="hljs-subst">#{strings.nucleotidesMap.sequence}</span>: <span class="hljs-subst">#{pairs[<span class="hljs-number">0</span>].sequence}</span>&lt;/div&gt;"</span>
+        nucleotideDiv = <span class="hljs-string">"&lt;div&gt;<span class="hljs-subst">#{strings.nucleotidesMap.nucleotide}</span>: <span class="hljs-subst">#{pairs[<span class="hljs-number">0</span>].nucleotide}</span>&lt;/div&gt;"</span>
+        coverageDiv = <span class="hljs-string">"&lt;div&gt;<span class="hljs-subst">#{strings.nucleotidesMap.coverage}</span>: <span class="hljs-subst">#{pairs[<span class="hljs-number">0</span>].coverage}</span>&lt;/div&gt;"</span>
+        totalCountDiv = <span class="hljs-string">"&lt;div&gt;<span class="hljs-subst">#{strings.nucleotidesMap.totalCount}</span>: <span class="hljs-subst">#{total.toFixed(<span class="hljs-number">2</span>)}</span>&lt;/div&gt;"</span>
+        variabilityDiv = <span class="hljs-string">"&lt;div&gt;<span class="hljs-subst">#{strings.nucleotidesMap.variability}</span>: <span class="hljs-subst">#{variability}</span>&lt;/div&gt;"</span>
+        body = _.map(tooltipTemplate, <span class="hljs-function"><span class="hljs-params">(obj)</span> -&gt;</span>
+          count = nucleotideToPair[obj.name]?.count || <span class="hljs-number">0</span>
+          variability = <span class="hljs-keyword">if</span> (total <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>) <span class="hljs-keyword">then</span> <span class="hljs-string">"N/A"</span> <span class="hljs-keyword">else</span> (count * <span class="hljs-number">100</span> / total).toFixed(<span class="hljs-number">2</span>) + <span class="hljs-string">"%"</span>
+          <span class="hljs-string">"""&lt;div&gt;
+               &lt;span class="square square-<span class="hljs-subst">#{obj.className}</span>"&gt;<span class="hljs-subst">#{obj.name}</span>&lt;/span&gt;
+               &lt;label&gt;<span class="hljs-subst">#{count + <span class="hljs-string">"\t\t"</span> + variability}</span>&lt;/label&gt;
+             &lt;/div&gt;"""</span>).join(<span class="hljs-string">""</span>)
+        html = <span class="hljs-string">"&lt;div class='layer-cake-tooltip'&gt;"</span> + sequenceDiv + nucleotideDiv + totalCountDiv + variabilityDiv + coverageDiv + body + <span class="hljs-string">"&lt;/div&gt;"</span>
+        @show html, lang.mixin(<span class="hljs-literal">null</span>, rect, {x: rect.x - <span class="hljs-number">10</span>}), position
+
+      @lastColumn = column
+      @lastRow = row
+  })()
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

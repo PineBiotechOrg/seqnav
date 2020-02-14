@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Table.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Aminoacids.html">
+                  Aminoacids.coffee
+                </a>
+              
+                
+                <a class="source" href="AppModel.html">
+                  AppModel.coffee
+                </a>
+              
+                
+                <a class="source" href="Fitness.html">
+                  Fitness.coffee
+                </a>
+              
+                
+                <a class="source" href="Proteins.html">
+                  Proteins.coffee
+                </a>
+              
+                
+                <a class="source" href="Table.html">
+                  Table.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>Table.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>,
+        <span class="hljs-string">"underscore/underscore"</span>,
+        <span class="hljs-string">"./../utils/Iterator"</span>,
+        <span class="hljs-string">"./Aminoacids"</span>]
+(declare,
+ _,
+ Iterator,
+ Aminoacids) -&gt;
+<span class="hljs-function">
+  <span class="hljs-title">compareNucleotide</span> = <span class="hljs-params">(x, obj)</span> -&gt;</span> obj.nucleotide &lt; x</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Util method which takes array population and scrolls to nucleotide ‘untilNucleotide’
+starting from position ‘start’. Returns object with index of nucleotide ‘untilNucleotide’
+and how much nucleotide were scrolled.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">  <span class="hljs-title">skipNucleotides</span> = <span class="hljs-params">(population, start, untilNucleotide)</span> -&gt;</span>
+    idx = start
+    x = population[start]
+    length = population.length
+    skipped = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> (idx &lt; length)
+      nextX = population[idx]
+      <span class="hljs-keyword">if</span> (nextX.nucleotide <span class="hljs-keyword">isnt</span> x.nucleotide) <span class="hljs-keyword">then</span> skipped++
+      x = nextX
+      <span class="hljs-keyword">if</span> (x.nucleotide <span class="hljs-keyword">is</span> untilNucleotide) <span class="hljs-keyword">then</span> <span class="hljs-keyword">break</span>
+      idx++
+    {nextIdx: idx, skipped: skipped}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Util method which takes population and returns all nucleotides with current position.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">  <span class="hljs-title">skipOneNucleotide</span> = <span class="hljs-params">(nucleotides, idx, populationIndex, nucleotidesCounter)</span> -&gt;</span>
+    nucleotide = nucleotides[idx].nucleotide
+    {nextIdx: nextIdx} = skipNucleotides(nucleotides, idx, nucleotide + <span class="hljs-number">1</span>)
+    groupedNucleotides = nucleotides.slice idx, nextIdx</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>idx = nextIdx</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    groupedNucleotides.variance = <span class="hljs-number">0</span>
+    groupedNucleotides.nucleotidesCounter = nucleotidesCounter
+    groupedNucleotides.populationIndex = populationIndex
+    {ns: groupedNucleotides, idx: nextIdx}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Builds table with rates for nucleotides.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  NucleotidesTable = declare <span class="hljs-literal">null</span>, {
+    constructor: <span class="hljs-function"><span class="hljs-params">(range, baseTable, scanNextChunk, normalChunkSize, firstNucleotide, lastNucleotide, lowThreshold, highThreshold)</span> -&gt;</span>
+      drop = compareNucleotide.bind <span class="hljs-literal">null</span>, range.from
+      take = compareNucleotide.bind <span class="hljs-literal">null</span>, range.to
+
+      normalizedTable = []
+      allCoverages = []
+      tableHighestCoverage = <span class="hljs-number">0</span>
+      _.each baseTable.data, <span class="hljs-function"><span class="hljs-params">(population, populationIndex)</span> -&gt;</span>
+        nucleotides = Iterator.fromArray(population)
+          .dropWhile(drop)
+          .takeWhile(take)
+          .toArray()
+
+        idx = <span class="hljs-number">0</span>
+        length = nucleotides.length
+        nucleotidesCounter = <span class="hljs-number">0</span>
+        max = baseTable.max
+        coverages = []
+        <span class="hljs-keyword">while</span> (idx &lt; length)
+          nucleotide = nucleotides[idx].nucleotide
+          <span class="hljs-keyword">if</span> (nucleotide &lt; firstNucleotide || lastNucleotide &lt; nucleotide)
+            {ns: groupedNucleotides, idx: idx} = skipOneNucleotide nucleotides, idx, populationIndex, nucleotidesCounter++
+            normalizedTable.push groupedNucleotides
+          <span class="hljs-keyword">else</span>
+            chunk = scanNextChunk(nucleotides, idx, lastNucleotide)
+            <span class="hljs-keyword">if</span> ((chunk.length - <span class="hljs-number">2</span>) / <span class="hljs-number">2</span> &lt; normalChunkSize)
+              i = <span class="hljs-number">0</span>
+              <span class="hljs-keyword">while</span> (i++ &lt; normalChunkSize <span class="hljs-keyword">and</span> idx &lt; length)
+                {ns: groupedNucleotides, idx: idx} = skipOneNucleotide nucleotides, idx, populationIndex, nucleotidesCounter++
+                normalizedTable.push groupedNucleotides
+                coverages.push groupedNucleotides[<span class="hljs-number">0</span>].coverage
+                tableHighestCoverage = Math.max(groupedNucleotides[<span class="hljs-number">0</span>].coverage, tableHighestCoverage)
+            <span class="hljs-keyword">else</span>
+              j = <span class="hljs-number">0</span>
+              idx = chunk[chunk.length - <span class="hljs-number">1</span>]
+              lastChunkIndex = chunk.length - <span class="hljs-number">2</span>
+              <span class="hljs-keyword">while</span> (j &lt; lastChunkIndex)
+                groupedNucleotides = nucleotides.slice chunk[j++], chunk[j++]
+                groupedNucleotides.variance = Table.calcRate lowThreshold, highThreshold, groupedNucleotides, <span class="hljs-number">0</span>, groupedNucleotides.length
+                groupedNucleotides.nucleotidesCounter = nucleotidesCounter++
+                groupedNucleotides.populationIndex = populationIndex
+                normalizedTable.push groupedNucleotides
+                coverages.push groupedNucleotides[<span class="hljs-number">0</span>].coverage
+                tableHighestCoverage = Math.max(groupedNucleotides[<span class="hljs-number">0</span>].coverage, tableHighestCoverage)
+
+        allCoverages.push coverages
+      @normalizedTable = normalizedTable
+
+      binSize = range.to - range.from
+      populationCount = baseTable.data.length
+      length = normalizedTable.length
+      @allCoverages = allCoverages
+      @tableHighestCoverage = tableHighestCoverage
+      @baseTable = baseTable
+      @referenceNucleotides = Iterator.range(<span class="hljs-number">0</span>, binSize - <span class="hljs-number">1</span>).map(<span class="hljs-function"><span class="hljs-params">(nucleotide)</span> -&gt;</span>
+        i = nucleotide
+        total = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> (i &lt; length)
+          total += normalizedTable[i].variance
+          i += binSize
+        first = normalizedTable[nucleotide][<span class="hljs-number">0</span>]
+        {nucleotide: first.nucleotide, reference: first.refNucleotide, coverage: first.coverage, avg: total / populationCount}
+      ).toArray()
+
+    getPopulations: <span class="hljs-function">-&gt;</span> @baseTable.getPopulationNames()
+    getAllCoverages: <span class="hljs-function">-&gt;</span> @allCoverages
+    getHighCoverage: <span class="hljs-function">-&gt;</span> @tableHighestCoverage
+
+    getReferenceNucleotides: <span class="hljs-function">-&gt;</span> @referenceNucleotides
+    getNormalizedTable: <span class="hljs-function">-&gt;</span> @normalizedTable
+
+    getNucleotidesRange: <span class="hljs-function"><span class="hljs-params">(from, to)</span> -&gt;</span>
+      Iterator.fromArray(@getReferenceNucleotides())
+        .dropWhile(compareNucleotide.bind(<span class="hljs-literal">null</span>, from))
+        .takeWhile(compareNucleotide.bind(<span class="hljs-literal">null</span>, to))
+        .map(<span class="hljs-function"><span class="hljs-params">(n)</span> -&gt;</span> n.reference)
+        .toArray(<span class="hljs-string">""</span>)
+
+    slice: <span class="hljs-function"><span class="hljs-params">(idx, length)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (@getReferenceNucleotides().length &lt; length)
+        @
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">new</span> NucleotidesTableSlice @, idx, length
+  }
+
+  NucleotidesTableSlice = declare <span class="hljs-literal">null</span>, {
+    constructor: <span class="hljs-function"><span class="hljs-params">(parentTable, idx, length)</span> -&gt;</span>
+      @referenceNucleotides = parentTable.getReferenceNucleotides().slice(idx * length, (idx + <span class="hljs-number">1</span>) * length)
+      min = idx * length
+      max = (idx + <span class="hljs-number">1</span>) * length
+      @normalizedTable = _.filter(parentTable.getNormalizedTable(), <span class="hljs-function"><span class="hljs-params">(xs)</span> -&gt;</span> min &lt;= xs.nucleotidesCounter &lt; max)
+      @allCoverages = _.map(parentTable.getAllCoverages(), <span class="hljs-function"><span class="hljs-params">(coverages)</span> -&gt;</span> coverages.slice(idx * length, (idx + <span class="hljs-number">1</span>) * length))
+      @tableHighestCoverage = Math.max.apply(<span class="hljs-literal">null</span>, _.map(@allCoverages, <span class="hljs-function"><span class="hljs-params">(coverages)</span> -&gt;</span> Math.max.apply(<span class="hljs-literal">null</span>, coverages)))
+      @parentTable = parentTable
+
+    getPopulations: <span class="hljs-function">-&gt;</span> @parentTable.getPopulationNames()
+    getAllCoverages: <span class="hljs-function">-&gt;</span> @allCoverages
+    getHighCoverage: <span class="hljs-function">-&gt;</span> @tableHighestCoverage
+
+    getReferenceNucleotides: <span class="hljs-function">-&gt;</span> @referenceNucleotides
+    getNormalizedTable: <span class="hljs-function">-&gt;</span> @normalizedTable
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Takes source data for nucleotides and aggregates that information into bins taking into account filters
+(sysnonymous or non-synonymous), bin size, proteins range (applies only for sysnon or non-sysnon cases).</p>
+<p>Rate value for bin is maximum for rates across nucleotides for this bin.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  GroupedTable = declare <span class="hljs-literal">null</span>, {
+    constructor: (binSize, baseTable,
+                  scanNextChunk, normalChunkSize,
+                  firstNucleotide, lastNucleotide,
+                  lowThreshold, highThreshold) -&gt;
+      bins = []
+      totals = []
+
+      _.each baseTable.data, <span class="hljs-function"><span class="hljs-params">(population, populationIndex)</span> -&gt;</span>
+        idx = <span class="hljs-number">0</span>
+        length = population.length
+        binNumber = <span class="hljs-number">-1</span>
+        localFirstNucleotide = firstNucleotide
+        max = baseTable.max
+        <span class="hljs-keyword">while</span> idx &lt; length
+          z = population[idx]
+          endNucleotide = z.nucleotide + binSize
+          binNucleotideCount = <span class="hljs-number">0</span>
+          <span class="hljs-keyword">if</span> (z.nucleotide &lt; localFirstNucleotide)
+            {nextIdx: idx, skipped: binNucleotideCount} = skipNucleotides population, idx, Math.min(localFirstNucleotide, endNucleotide)
+
+          totalBinRate = <span class="hljs-number">0</span>
+          <span class="hljs-keyword">if</span> (idx &lt; length <span class="hljs-keyword">and</span> population[idx].nucleotide <span class="hljs-keyword">isnt</span> endNucleotide)
+            chunk = []
+            <span class="hljs-keyword">loop</span>
+              chunk = scanNextChunk(population, idx, endNucleotide)
+              binNucleotideCount += chunk[chunk.length - <span class="hljs-number">2</span>]
+              <span class="hljs-keyword">if</span> (chunk[chunk.length - <span class="hljs-number">2</span>] &lt; normalChunkSize)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>localFirstNucleotide = idx + normalChunkSize - chunk[chunk.length - 2]
+localFirstNucleotide = skipNucleotides(population, idx, population[idx].nucleotide + normalChunkSize).nextIdx</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                localFirstNucleotide = population[idx].nucleotide + normalChunkSize
+                idx = chunk[chunk.length - <span class="hljs-number">1</span>]
+                <span class="hljs-keyword">break</span>
+              <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (idx &lt; length <span class="hljs-keyword">and</span> lastNucleotide &lt; population[idx].nucleotide)
+                idx = chunk[chunk.length - <span class="hljs-number">1</span>]
+                {nextIdx: idx, skipped: skipped} = skipNucleotides population, idx, endNucleotide
+                binNucleotideCount += skipped
+                <span class="hljs-keyword">break</span>
+              <span class="hljs-keyword">else</span>
+                idx = chunk[chunk.length - <span class="hljs-number">1</span>]
+                j = <span class="hljs-number">0</span>
+                lastChunkIndex = chunk.length - <span class="hljs-number">2</span>
+                <span class="hljs-keyword">while</span> (j &lt; lastChunkIndex)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>totalBinRate += Table.calcRate lowThreshold, highThreshold, population, chunk[j++], chunk[j++]</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                  totalBinRate = Math.max(totalBinRate, Table.calcRate lowThreshold, highThreshold, population, chunk[j++], chunk[j++])</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>binRate = totalBinRate / binNucleotideCount</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          binRate = totalBinRate
+          bins.push {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>totalVariant: totalVariant
+referenceVariant: referenceVariant</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            rate: binRate
+            sequence: z.sequence
+            binNumber: ++binNumber
+            populationIndex: populationIndex
+            from: z.nucleotide
+            to: z.nucleotide + binNucleotideCount
+          }
+          prevAverage = totals[binNumber] || <span class="hljs-number">0</span>
+          totals[binNumber] = prevAverage + binRate
+
+      @bins = bins
+      populationCount = baseTable.data.length
+      @averages = _.map totals, <span class="hljs-function"><span class="hljs-params">(total)</span> -&gt;</span> total / populationCount
+      @baseTable = baseTable
+      @scanNextChunk = scanNextChunk
+      @normalChunkSize = normalChunkSize
+      @firstNucleotide = firstNucleotide
+      @lastNucleotide = lastNucleotide
+      @lowThreshold = lowThreshold
+      @highThreshold = highThreshold
+      @allCoverages = _.map baseTable.data, @calcCoverage.bind(@, binSize)
+
+    getAllBins: <span class="hljs-function">-&gt;</span> @bins
+    getBinCount: <span class="hljs-function">-&gt;</span> @averages.length
+    getAverages: <span class="hljs-function">-&gt;</span> @averages
+    getNucleotidesRange: <span class="hljs-function">-&gt;</span> @baseTable.nucleotidesRange
+    getNucleotidesCount: <span class="hljs-function">-&gt;</span> @baseTable.nucleotidesRange.max - @baseTable.nucleotidesRange.min + <span class="hljs-number">1</span>
+    getPopulations: <span class="hljs-function">-&gt;</span> @baseTable.getPopulationNames()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Creates nucleotides table for nucleotides from bin</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    makeNucleotidesTable: <span class="hljs-function"><span class="hljs-params">(binNumber)</span> -&gt;</span>
+      bin = @bins[binNumber]
+      firstNucleotide = <span class="hljs-keyword">if</span> (bin.from &lt; @firstNucleotide)
+        @firstNucleotide
+      <span class="hljs-keyword">else</span>
+        Math.ceil((bin.from - @firstNucleotide) / @normalChunkSize) * @normalChunkSize + @firstNucleotide
+      <span class="hljs-keyword">new</span> NucleotidesTable bin, @baseTable, @scanNextChunk, @normalChunkSize, firstNucleotide, @lastNucleotide, @lowThreshold, @highThreshold</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Creates nucleotides table for nucleotides from range [from, to]</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    makeNucleotidesTableForRange: <span class="hljs-function"><span class="hljs-params">(from, to)</span> -&gt;</span>
+      <span class="hljs-keyword">new</span> NucleotidesTable {from: from, to: to + <span class="hljs-number">1</span>}, @baseTable, @scanNextChunk, @normalChunkSize, @firstNucleotide, @lastNucleotide, @lowThreshold, @highThreshold</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Returns array of arrays with coverages for each passage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getAllCoverages: <span class="hljs-function">-&gt;</span> @allCoverages</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Returns highest coverage across all passages</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getHighestCoverage: <span class="hljs-function">-&gt;</span> @baseTable.highestCoverage</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Calculates coverage for given population and bin size. Coverage for bin is average coverage across all
+nucleotides from the bin.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    calcCoverage: <span class="hljs-function"><span class="hljs-params">(binSize, population)</span> -&gt;</span>
+      idx = <span class="hljs-number">0</span>
+      length = population.length
+      result = []
+      <span class="hljs-keyword">while</span> idx &lt; length
+        z = population[idx]
+        endNucleotide = z.nucleotide + binSize
+        coverage = z.coverage
+        nucleotidesInBin = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> (idx &lt; length <span class="hljs-keyword">and</span> (x = population[idx]).nucleotide &lt; endNucleotide)
+          <span class="hljs-keyword">if</span> (x.nucleotide <span class="hljs-keyword">isnt</span> z.nucleotide)
+            coverage += x.coverage
+            nucleotidesInBin++
+            z = z
+          idx++
+        result.push(coverage / nucleotidesInBin)
+      result
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Parses CSV row to JS object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">  <span class="hljs-title">passageStrToObj</span> = <span class="hljs-params">(passageName, parser, str)</span> -&gt;</span>
+    it = parser(str)
+    sequence: passageName
+    nucleotide: parseInt(it())
+    refNucleotide: it()
+    varNucleotide: it()
+    coverage: parseInt(it())
+    count: parseFloat(it())</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Basic module which contains raw information about all passages. Parses it from *.mt files and aggregates into bins.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Table = declare <span class="hljs-literal">null</span>, {
+    constructor: <span class="hljs-function"><span class="hljs-params">(passageIterators, parser)</span> -&gt;</span>
+      highestCoverage = <span class="hljs-number">0</span>
+      highestCount = <span class="hljs-number">0</span>
+      currentTotalCount = <span class="hljs-number">0</span>
+      maxA = -Number.MAX_VALUE
+      data = _.map(passageIterators, <span class="hljs-function"><span class="hljs-params">({passageName, it})</span> -&gt;</span>
+        totalAperPassage = <span class="hljs-number">0</span>
+        obj = passageStrToObj(passageName, parser, it.next())
+        currentNucleotide = obj.nucleotide
+        currentCoverage = obj.coverage
+        currentTotalCount = obj.count
+        array = it.map(<span class="hljs-function"><span class="hljs-params">(str)</span> -&gt;</span>
+          obj = passageStrToObj(passageName, parser, str)
+          <span class="hljs-keyword">if</span> (currentNucleotide <span class="hljs-keyword">isnt</span> obj.nucleotide)
+            currentNucleotide = obj.nucleotide
+            highestCoverage = Math.max(highestCoverage, currentCoverage)
+            a = Math.log(currentTotalCount / currentCoverage + <span class="hljs-number">1</span>)
+            maxA = Math.max(maxA, a)
+            currentCoverage = obj.coverage
+            totalAperPassage += a
+            currentTotalCount = <span class="hljs-number">0</span>
+          currentTotalCount += obj.count
+          obj
+        ).toArray()
+        array
+      )
+
+      data.sort(<span class="hljs-function"><span class="hljs-params">(b1, b2)</span> -&gt;</span>
+        s1 = b1[<span class="hljs-number">0</span>].sequence
+        s2 = b2[<span class="hljs-number">0</span>].sequence
+        <span class="hljs-keyword">if</span> (s1 &lt; s2) <span class="hljs-keyword">then</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">else</span> (<span class="hljs-keyword">if</span> (s1 &gt; s2) <span class="hljs-keyword">then</span> <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+      )
+
+      @nucleotidesRange =  {min: _.first(data[<span class="hljs-number">0</span>]).nucleotide, max: _.last(data[<span class="hljs-number">0</span>]).nucleotide}
+      @data = data
+      @highestCoverage = highestCoverage
+      @max = maxA
+      @names = _.map data, <span class="hljs-function"><span class="hljs-params">(x)</span> -&gt;</span> x[<span class="hljs-number">0</span>].sequence
+
+    getPopulationNames: <span class="hljs-function">-&gt;</span> @names
+    getPopulation: <span class="hljs-function"><span class="hljs-params">(name)</span> -&gt;</span> @nameToPopulation[name]</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Main method of this module which takes
+  (o) binSize (int),
+  (o) synonymous (boolean), nonsynonymous (boolean),
+  (o) index of first nucleotide from protein (int), index of last nucleotide from last protein (int),
+  (o) low threshold (int), high threshold (int).
+Returns object GroupedTable.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    aggregateData: (binSize,
+                    synonymous, nonsynonymous,
+                    proteinStart, proteinEnd,
+                    lowThreshold, highThreshold) -&gt;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>console.log “thresholds”, lowThreshold, highThreshold</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      [low, high] = @findBoundariesInsideRange(lowThreshold * @max / <span class="hljs-number">100</span>, highThreshold * @max / <span class="hljs-number">100</span>)
+      <span class="hljs-keyword">if</span> (synonymous)
+        <span class="hljs-keyword">if</span> (nonsynonymous)
+          <span class="hljs-keyword">new</span> GroupedTable(binSize, @, scanForAllMutations, <span class="hljs-number">1</span>, @nucleotidesRange.min, @nucleotidesRange.max, low, high)
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">new</span> GroupedTable(binSize, @, scanOnlyForType.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">"synonymous"</span>), <span class="hljs-number">3</span>, proteinStart, proteinEnd, low, high)
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">if</span> (nonsynonymous)
+          <span class="hljs-keyword">new</span> GroupedTable(binSize, @, scanOnlyForType.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">"nonsynonymous"</span>), <span class="hljs-number">3</span>, proteinStart, proteinEnd, low, high)
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">new</span> GroupedTable(binSize, @, scanOnlyForType.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">"empty"</span>), <span class="hljs-number">3</span>, proteinStart, proteinEnd, low, high)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Internal method which finds maximum and minumum rate between chosen lowThreshold and highThreshold.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    findBoundariesInsideRange: <span class="hljs-function"><span class="hljs-params">(lowThreshold, highThreshold)</span> -&gt;</span>
+      low = Number.MAX_VALUE
+      high = -Number.MAX_VALUE
+      minSeq = <span class="hljs-number">-1</span>
+      maxSeq = <span class="hljs-number">-1</span>
+      minIdx = <span class="hljs-number">-1</span>
+      maxIdx = <span class="hljs-number">-1</span>
+      _.each @data, <span class="hljs-function"><span class="hljs-params">(passage)</span> -&gt;</span>
+        currentNucleotide = passage[<span class="hljs-number">0</span>].nucleotide
+        currentCoverage = passage[<span class="hljs-number">0</span>].coverage
+        currentTotalCount = passage[<span class="hljs-number">0</span>].count
+        j = <span class="hljs-number">1</span>
+        l = passage.length
+        <span class="hljs-keyword">while</span> (j &lt; l)
+          obj = passage[j]
+          <span class="hljs-keyword">if</span> (currentNucleotide <span class="hljs-keyword">isnt</span> obj.nucleotide)
+            a = Math.log(currentTotalCount / currentCoverage + <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">if</span> (a &gt;= lowThreshold)
+              low = Math.min a, low
+            <span class="hljs-keyword">if</span> (a &lt;= highThreshold)
+              high = Math.max a, high
+
+            <span class="hljs-keyword">if</span> (a == low)
+              minIdx = j
+              minSeq = obj.sequence
+            <span class="hljs-keyword">if</span> (a == high)
+              maxIdx = j
+              maxSeq = obj.sequence
+
+            currentCoverage = obj.coverage
+            currentNucleotide = obj.nucleotide
+            currentTotalCount = <span class="hljs-number">0</span>
+          currentTotalCount += obj.count
+          j++
+        <span class="hljs-number">1</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>console.log “min”, minSeq, minIdx, low
+console.log “max”, maxSeq, maxIdx, high</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+      [low, high]
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>These two methods (scanForAllMutations and scanOnlyForType) are used in order to unify processing nucleotides for different
+kinds of filtering: synonymous, non-synonymous or plain.
+When user doesn’t specify filter (neither synonymous nor non-synonymous) we need to scan by one nucleotide and method 
+scanForAllMutations does it. When user specifies synonymous or non-synonymous filtering, we need to scan by three nucleotides
+(by amino acid), method scanOnlyForType does it.</p>
+<p>Both these methods returns array which has such structure:
+[first_idx_for_nucleotide1, last_idx_for_nucleotide1, …, first_idx_for_nucleotideN, last_idx_for_nucleotideN, N, nextIdx]</p>
+<p>If there is no nucleotides matched current filter were found, this method returns array only from two elements.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">  <span class="hljs-title">scanForAllMutations</span> = <span class="hljs-params">(arr, from, endNucleotide)</span> -&gt;</span>
+    currentNucleotide = arr[from].nucleotide
+    <span class="hljs-keyword">if</span> (currentNucleotide <span class="hljs-keyword">is</span> endNucleotide)
+      [<span class="hljs-number">0</span>, from]
+    <span class="hljs-keyword">else</span>
+      i = from + <span class="hljs-number">1</span>
+      length = arr.length
+      <span class="hljs-keyword">while</span> (i &lt; length <span class="hljs-keyword">and</span> arr[i].nucleotide <span class="hljs-keyword">is</span> currentNucleotide)
+        i++
+      <span class="hljs-keyword">if</span> (i <span class="hljs-keyword">is</span> length <span class="hljs-keyword">and</span> i <span class="hljs-keyword">is</span> from + <span class="hljs-number">1</span>) <span class="hljs-keyword">then</span> [<span class="hljs-number">0</span>, arr.length] <span class="hljs-keyword">else</span> [from, i, <span class="hljs-number">1</span>, i]
+<span class="hljs-function">
+  <span class="hljs-title">scanOnlyForType</span> = <span class="hljs-params">(type, arr, from, endNucleotide)</span> -&gt;</span>
+    referenceAminoacid = <span class="hljs-string">""</span>
+    prevMutations = [<span class="hljs-string">""</span>]
+    nextMutations = []
+    result = []
+    nucleotideNumber = <span class="hljs-number">1</span>
+    i = from
+    length = arr.length
+    pair = <span class="hljs-literal">undefined</span>
+    <span class="hljs-keyword">while</span> (nucleotideNumber &lt;= <span class="hljs-number">3</span>)
+      <span class="hljs-keyword">if</span> (i <span class="hljs-keyword">is</span> length)
+        <span class="hljs-keyword">return</span> [nucleotideNumber - <span class="hljs-number">1</span>, arr.length]
+      pair = arr[i]
+      currentNucleotide = pair.nucleotide
+      <span class="hljs-keyword">if</span> (currentNucleotide <span class="hljs-keyword">is</span> endNucleotide)
+        <span class="hljs-keyword">return</span> [nucleotideNumber - <span class="hljs-number">1</span>, i]<span class="hljs-comment">#arr[from].nucleotide + 3]</span>
+      result.push i
+      referenceAminoacid += pair.refNucleotide
+      <span class="hljs-keyword">while</span> (i &lt; length <span class="hljs-keyword">and</span> (pair = arr[i]).nucleotide <span class="hljs-keyword">is</span> currentNucleotide)
+        mutationIndex = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> (mutationIndex &lt; prevMutations.length)
+          nextMutations.push(prevMutations[mutationIndex] + pair.varNucleotide)
+          mutationIndex++
+        i++
+      prevMutations = nextMutations
+      nextMutations = []
+      nucleotideNumber++
+      result.push i
+
+    result.push <span class="hljs-number">3</span>
+    result.push i
+    <span class="hljs-keyword">if</span> (type <span class="hljs-keyword">is</span> <span class="hljs-string">"synonymous"</span>)
+      <span class="hljs-keyword">if</span> (Aminoacids.checkSynonymousMutations(referenceAminoacid, prevMutations)) <span class="hljs-keyword">then</span> result <span class="hljs-keyword">else</span> [<span class="hljs-number">3</span>, i]
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (type <span class="hljs-keyword">is</span> <span class="hljs-string">"nonsynonymous"</span>)
+      <span class="hljs-keyword">if</span> (Aminoacids.checkNonSynonymousMutations(referenceAminoacid, prevMutations)) <span class="hljs-keyword">then</span> result <span class="hljs-keyword">else</span> [<span class="hljs-number">3</span>, i]
+    <span class="hljs-keyword">else</span> <span class="hljs-comment"># type is "empty"</span>
+      [<span class="hljs-number">3</span>, i]
+
+  Table.findNucleotideInfo = <span class="hljs-function"><span class="hljs-params">(pairs, from, to)</span> -&gt;</span>
+    i = from
+    total = <span class="hljs-number">0</span>
+    identity = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> (i &lt; to)
+      pair = pairs[i]
+      freq = pair.varFrequency
+      total += freq
+      identity += freq <span class="hljs-keyword">if</span> pair.refNucleotide <span class="hljs-keyword">is</span> pair.varNucleotide
+      i++
+    {total: total, identity: identity}
+
+  Table.calcRate = <span class="hljs-function"><span class="hljs-params">(min, max, pairs, from, to)</span> -&gt;</span>
+    i = from
+    totalCount = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> (i &lt; to)
+      totalCount += pairs[i].count
+      i++
+
+    val = Math.log(totalCount / pairs[from].coverage + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">if</span> (val &lt;= min) <span class="hljs-keyword">then</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (val &gt;= max) <span class="hljs-keyword">then</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">else</span> (val - min) / (max - min)
+
+  Table
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

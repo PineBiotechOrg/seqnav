@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>AbstractLayerCakeHeader.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>AbstractLayerCakeHeader.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>,
+        <span class="hljs-string">"./../uiUtils"</span>,
+        <span class="hljs-string">"dojo/i18n!./../nls/base"</span>],
+(declare, lang,
+ uiUtils,
+ strings) -&gt;
+
+  SelectionCaret = declare <span class="hljs-literal">null</span>, {
+    column: <span class="hljs-number">-1</span>
+
+    constructor: <span class="hljs-function"><span class="hljs-params">(parent, cellHeight, labelWidth, verticalOffset)</span> -&gt;</span>
+      @labelWidth = labelWidth
+      @area = parent.append(<span class="hljs-string">"rect"</span>)
+        .attr(<span class="hljs-string">"y"</span>, verticalOffset - <span class="hljs-number">3</span>)
+        .attr(<span class="hljs-string">"height"</span>, cellHeight + <span class="hljs-number">6</span>)
+        .attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(-500, 0)"</span>)
+        .classed(<span class="hljs-string">"selection-caret"</span>, <span class="hljs-literal">true</span>)
+
+    setWidth: <span class="hljs-function"><span class="hljs-params">(width)</span> -&gt;</span>
+      @area.attr(<span class="hljs-string">"width"</span>, width + <span class="hljs-number">1</span>)
+      @cellWidth = width
+
+    setPosition: <span class="hljs-function"><span class="hljs-params">(column)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (@column <span class="hljs-keyword">isnt</span> column)
+        @area.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{column * @cellWidth + @labelWidth - <span class="hljs-number">1</span>}</span>, 0)"</span>)
+        @column = column
+  }
+
+  declare <span class="hljs-literal">null</span>, {
+    cellHeight: <span class="hljs-number">24</span>
+
+    constructor: <span class="hljs-function"><span class="hljs-params">(area, labelWidth, supportsSelection)</span> -&gt;</span>
+      @mainArea = area
+      @labelWidth = labelWidth
+      @supportsSelection = supportsSelection
+
+      <span class="hljs-keyword">if</span> (labelWidth &gt; <span class="hljs-number">0</span>)
+        area.classed(<span class="hljs-string">"layer-cake-header"</span>, <span class="hljs-literal">true</span>)
+          .append(<span class="hljs-string">"text"</span>)
+          .text(@getName())
+          .attr(<span class="hljs-string">"y"</span>, @_getRectanglesBarVerticalOffset() + @cellHeight / <span class="hljs-number">2</span>)
+          .classed(<span class="hljs-string">"name"</span>, <span class="hljs-literal">true</span>)
+      <span class="hljs-keyword">if</span> (supportsSelection)
+        @selectionCaret = <span class="hljs-keyword">new</span> SelectionCaret area, @cellHeight, labelWidth, @_getRectanglesBarVerticalOffset()
+
+      @cellsArea = area.append(<span class="hljs-string">"g"</span>)
+        .attr(<span class="hljs-string">"height"</span>, @cellHeight)
+        .attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{labelWidth}</span>, <span class="hljs-subst">#{@_getRectanglesBarVerticalOffset()}</span>)"</span>)
+        .attr(<span class="hljs-string">"layer-cake-header-cells"</span>, <span class="hljs-literal">true</span>)
+
+    getName: <span class="hljs-function">-&gt;</span> strings.layerCakeHeader.reference
+
+    setData: <span class="hljs-function"><span class="hljs-params">(data, colorValueExtractor)</span> -&gt;</span>
+      @initialized = <span class="hljs-literal">true</span>
+      @cellCount = data.length
+
+      rect = @cellsArea.selectAll(<span class="hljs-string">"rect"</span>).data(data)
+      rect.enter().append(<span class="hljs-string">"rect"</span>)
+        .attr(<span class="hljs-string">"height"</span>, @cellHeight)
+      rect.exit().remove()
+      rect.style <span class="hljs-string">"fill"</span>, <span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> uiUtils.getColor(<span class="hljs-number">0</span>, colorValueExtractor(d))
+
+    resize: <span class="hljs-function"><span class="hljs-params">(s)</span> -&gt;</span>
+      @currentSize = s
+
+      <span class="hljs-keyword">if</span> (@initialized)
+        width = @width = (s.w - @labelWidth) / @cellCount
+        @cellsArea.selectAll(<span class="hljs-string">"rect"</span>)
+          .attr(<span class="hljs-string">"width"</span>, width - <span class="hljs-number">1</span>)
+          .attr(<span class="hljs-string">"x"</span>, <span class="hljs-function"><span class="hljs-params">(x, i)</span> -&gt;</span> i * width)
+        @selectionCaret.setWidth(width) <span class="hljs-keyword">if</span> @supportsSelection
+
+    _getRectanglesBarVerticalOffset: <span class="hljs-function">-&gt;</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Abstract"</span>)
+
+    setSelection: <span class="hljs-function"><span class="hljs-params">(colNum)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (@supportsSelection)
+        @selectionCaret.setPosition colNum
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Not supports selection"</span>)
+
+    getHeight: <span class="hljs-function">-&gt;</span> @cellHeight + @_getRectanglesBarVerticalOffset()
+
+    move: <span class="hljs-function"><span class="hljs-params">(x, y)</span> -&gt;</span> @mainArea.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{x}</span>, <span class="hljs-subst">#{y}</span>)"</span>)
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

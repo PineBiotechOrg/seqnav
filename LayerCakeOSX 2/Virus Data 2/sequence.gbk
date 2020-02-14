@@ -1,0 +1,550 @@
+LOCUS       NC_002058               7440 bp ss-RNA     linear   VRL 20-MAR-2014
+DEFINITION  Poliovirus, complete genome.
+ACCESSION   NC_002058 NC_001428 NC_014336
+VERSION     NC_002058.3  GI:12408699
+DBLINK      BioProject: PRJNA15288
+KEYWORDS    RefSeq; coat protein; complementary DNA; genome; polyprotein.
+SOURCE      Enterovirus C
+  ORGANISM  Enterovirus C
+            Viruses; ssRNA viruses; ssRNA positive-strand viruses, no DNA
+            stage; Picornavirales; Picornaviridae; Enterovirus.
+COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
+            reference sequence was derived from V01149.
+            On or before Jan 17, 2013 this sequence version replaced
+            gi:9626433, gi:301349453, gi:12331600.
+            See also entries V01148 (POLIO1A, for another version of this
+            genome) and V01150 (POLIOS1, for the genome of the Sabin 1 strain).
+            See the entry V01148 (POLIO1A) for the sequence reported in [3].
+            Mature peptides were added to the annotation by NCBI RefSeq Genomes
+            staff.
+            COMPLETENESS: full length.
+FEATURES             Location/Qualifiers
+     5'UTR           1..742
+                     /experiment="EXISTENCE:[6264310 ]"
+                     /function="The 5' non-translated region (NTR) harbors two
+                     functional domains, the cloverleaf and the internal
+                     ribosome entry site (IRES), and is covalently linked to
+                     the viral protein VPg."
+     ncRNA           1..88
+                     /ncRNA_class="other"
+                     /product="stem-loop I (cloverleaf site)"
+                     /experiment="EXISTENCE:site-directed mutagenesis and
+                     chemical and RNAase probing[ 2170027; 1310772]"
+                     /note="Contains binding site for cellular poly(rC) binding
+                     protein 2 (PCBP2). Essential for RNA replication and,
+                     hence, viral prolifiration."
+     misc_structure  join(2..8,82..88)
+                     /experiment="EXISTENCE:site-directed mutation[ 2170027;
+                     20532207]"
+                     /note="stem a"
+                     /function="essential for the initiation of positive-strand
+                     RNA synthesis"
+     stem_loop       10..34
+                     /experiment="EXISTENCE: site-directed mutagenesis and the
+                     crystal structure of a related protease[ 8253083 ]"
+                     /note="stem-loop b"
+                     /function="binds poly(rC) binding protein 2 (PCBP2)"
+     stem_loop       35..45
+                     /experiment="EXISTENCE:induced mutagenesis and deletion
+                     analysis[8230467]"
+                     /note="stem-loop c"
+                     /function="involved in poliomavirus translation initiation
+                     and probably one of internal ribosome entry sites (IRES)"
+     stem_loop       51..78
+                     /experiment="EXISTENCE:mutational analysis[ 8253083;
+                     2170027; 9326487]"
+                     /note="stem-loop d"
+                     /function="specifically interact with the viral proteinase
+                     and RNA binding protein 3CD pro"
+     ncRNA           89..122
+                     /ncRNA_class="other"
+                     /product="spacer"
+                     /experiment="EXISTENCE:[17609276]"
+                     /note="Contains C-rich region, nt 89-95, which is required
+                     for PCBP (cellular poly(C) binding proteins) to function
+                     as an essential cofactor in poliovirus genome."
+     ncRNA           123..619
+                     /ncRNA_class="other"
+                     /product="internal ribosome entry site (IRES)"
+                     /experiment="EXISTENCE:immunoprecipitation, time course,
+                     and N-formyl-[35S]methionine labeling"
+                     /note="IRES mediates cap-independent translation of the
+                     viral mRNA by facilitating initiation of translation
+                     independent of a capping group and a free 5' end."
+     stem_loop       123..161
+                     /note="stem-loop II"
+                     /function="interacts with pyrimidine tract-binding protein
+                     (PTB)"
+     stem_loop       185..220
+                     /note="stem-loop III"
+                     /function="Essential for internal initiation of
+                     translation (showed experimentaly for Poliovirus 2)."
+     stem_loop       233..440
+                     /experiment="EXISTENCE:automated liquid
+                     chromatography-tandem mass spectrometry[8855318]"
+                     /note="stem-loop IV"
+                     /function="binds with poly(rC) binding protein 2 (PCBP2)"
+     stem_loop       448..556
+                     /experiment="EXISTENCE:The tethered hydroxyl-radical
+                     probing assays coupled with the mass spectrometry
+                     data.[20859255]"
+                     /note="stem-loop V"
+                     /function="Stem-loop V binds single polypyrimidine
+                     tract-binding protein (PTB) in a unique orientation. PTB
+                     RNA-binding domains (RBDs) 1 and 2 interact with the basal
+                     part of Domain V, and RBDs3 and 4 binding the putatively
+                     single-stranded linkers flanking Domain V. This stimulates
+                     IRES activity by inducing eukaryotic translation
+                     initiation factor 4 gammaprotein (eIF4G) to bind in the
+                     optimal position and orientation to promote internal
+                     ribosome entry."
+     stem_loop       581..618
+                     /note="stem-loop VI"
+                     /function="interacts with translation initiation factor 4
+                     gammaprotein (eIF4G)."
+     gene            743..7372
+                     /locus_tag="PVgp1"
+                     /db_xref="GeneID:919920"
+     CDS             743..7372
+                     /locus_tag="PVgp1"
+                     /experiment="EXISTENCE:[6264310]"
+                     /note="The polyprotein contains structural (P1) and
+                     non-structural (P2 and P3) proteins that are released from
+                     the polypeptide chain by proteolytic processing mediated
+                     by virally-encoded proteinases 2A pro and 3C pro/3CD pro
+                     to ultimately generate eleven mature viral proteins"
+                     /codon_start=1
+                     /product="genome polyprotein"
+                     /protein_id="NP_041277.1"
+                     /db_xref="GI:9627037"
+                     /db_xref="GOA:P03300"
+                     /db_xref="UniProtKB/Swiss-Prot:P03300"
+                     /db_xref="GeneID:919920"
+                     /translation="MGAQVSSQKVGAHENSNRAYGGSTINYTTINYYRDSASNAASKQ
+                     DFSQDPSKFTEPIKDVLIKTAPMLNSPNIEACGYSDRVLQLTLGNSTITTQEAANSVV
+                     AYGRWPEYLRDSEANPVDQPTEPDVAACRFYTLDTVSWTKESRGWWWKLPDALRDMGL
+                     FGQNMYYHYLGRSGYTVHVQCNASKFHQGALGVFAVPEMCLAGDSNTTTMHTSYQNAN
+                     PGEKGGTFTGTFTPDNNQTSPARRFCPVDYLLGNGTLLGNAFVFPHQIINLRTNNCAT
+                     LVLPYVNSLSIDSMVKHNNWGIAILPLAPLNFASESSPEIPITLTIAPMCCEFNGLRN
+                     ITLPRLQGLPVMNTPGSNQYLTADNFQSPCALPEFDVTPPIDIPGEVKNMMELAEIDT
+                     MIPFDLSATKKNTMEMYRVRLSDKPHTDDPILCLSLSPASDPRLSHTMLGEILNYYTH
+                     WAGSLKFTFLFCGFMMATGKLLVSYAPPGADPPKKRKEAMLGTHVIWDIGLQSSCTMV
+                     VPWISNTTYRQTIDDSFTEGGYISVFYQTRIVVPLSTPREMDILGFVSACNDFSVRLL
+                     RDTTHIEQKALAQGLGQMLESMIDNTVRETVGAATSRDALPNTEASGPTHSKEIPALT
+                     AVETGATNPLVPSDTVQTRHVVQHRSRSESSIESFFARGACVTIMTVDNPASTTNKDK
+                     LFAVWKITYKDTVQLRRKLEFFTYSRFDMELTFVVTANFTETNNGHALNQVYQIMYVP
+                     PGAPVPEKWDDYTWQTSSNPSIFYTYGTAPARISVPYVGISNAYSHFYDGFSKVPLKD
+                     QSAALGDSLYGAASLNDFGILAVRVVNDHNPTKVTSKIRVYLKPKHIRVWCPRPPRAV
+                     AYYGPGVDYKDGTLTPLSTKDLTTYGFGHQNKAVYTAGYKICNYHLATQDDLQNAVNV
+                     MWSRDLLVTESRAQGTDSIARCNCNAGVYYCESRRKYYPVSFVGPTFQYMEANNYYPA
+                     RYQSHMLIGHGFASPGDCGGILRCHHGVIGIITAGGEGLVAFSDIRDLYAYEEEAMEQ
+                     GITNYIESLGAAFGSGFTQQISDKITELTNMVTSTITEKLLKNLIKIISSLVIITRNY
+                     EDTTTVLATLALLGCDASPWQWLRKKACDVLEIPYVIKQGDSWLKKFTEACNAAKGLE
+                     WVSNKISKFIDWLKEKIIPQARDKLEFVTKLRQLEMLENQISTIHQSCPSQEHQEILF
+                     NNVRWLSIQSKRFAPLYAVEAKRIQKLEHTINNYIQFKSKHRIEPVCLLVHGSPGTGK
+                     SVATNLIARAIAERENTSTYSLPPDPSHFDGYKQQGVVIMDDLNQNPDGADMKLFCQM
+                     VSTVEFIPPMASLEEKGILFTSNYVLASTNSSRISPPTVAHSDALARRFAFDMDIQVM
+                     NEYSRDGKLNMAMATEMCKNCHQPANFKRCCPLVCGKAIQLMDKSSRVRYSIDQITTM
+                     IINERNRRSNIGNCMEALFQGPLQYKDLKIDIKTSPPPECINDLLQAVDSQEVRDYCE
+                     KKGWIVNITSQVQTERNINRAMTILQAVTTFAAVAGVVYVMYKLFAGHQGAYTGLPNK
+                     KPNVPTIRTAKVQGPGFDYAVAMAKRNIVTATTSKGEFTMLGVHDNVAILPTHASPGE
+                     SIVIDGKEVEILDAKALEDQAGTNLEITIITLKRNEKFRDIRPHIPTQITETNDGVLI
+                     VNTSKYPNMYVPVGAVTEQGYLNLGGRQTARTLMYNFPTRAGQCGGVITCTGKVIGMH
+                     VGGNGSHGFAAALKRSYFTQSQGEIQWMRPSKEVGYPIINAPSKTKLEPSAFHYVFEG
+                     VKEPAVLTKNDPRLKTDFEEAIFSKYVGNKITEVDEYMKEAVDHYAGQLMSLDINTEQ
+                     MCLEDAMYGTDGLEALDLSTSAGYPYVAMGKKKRDILNKQTRDTKEMQKLLDTYGINL
+                     PLVTYVKDELRSKTKVEQGKSRLIEASSLNDSVAMRMAFGNLYAAFHKNPGVITGSAV
+                     GCDPDLFWSKIPVLMEEKLFAFDYTGYDASLSPAWFEALKMVLEKIGFGDRVDYIDYL
+                     NHSHHLYKNKTYCVKGGMPSGCSGTSIFNSMINNLIIRTLLLKTYKGIDLDHLKMIAY
+                     GDDVIASYPHEVDASLLAQSGKDYGLTMTPADKSATFETVTWENVTFLKRFFRADEKY
+                     PFLIHPVMPMKEIHESIRWTKDPRNTQDHVRSLCLLAWHNGEEEYNKFLAKIRSVPIG
+                     RALLLPEYSTLYRRWLDSF"
+     proprotein      746..3385
+                     /locus_tag="PVgp1"
+                     /product="precursor polypeptide P1"
+                     /experiment="EXISTENCE:Amino acid sequence analysis
+                     cleavage products of the polyprotein.[6264310]"
+                     /note="Precursor of structural proteins. 3CDpro cleaves
+                     the P1 precursor polypeptide, giving rise to proteins VP0,
+                     VP3 and VP1."
+     proprotein      746..1765
+                     /locus_tag="PVgp1"
+                     /product="capsid protein VP0"
+                     /experiment="EXISTENCE:[6264310]"
+                     /note="Precursor of VP4 and VP2 capsid proteins. Cleavage
+                     of VP0 into capsid proteins VP4 and VP2 occurs during
+                     maturation of the virion."
+     mat_peptide     746..949
+                     /locus_tag="PVgp1"
+                     /product="capsid protein VP4"
+                     /experiment="EXISTENCE:x-ray crystallographic methods"
+                     /note="Poliovirus capsid is formed from 60 copies of 4
+                     coat protein subunits (VP1, VP2, VP3 and VP4). VP1, VP2
+                     and VP3 are the major capsid proteins forming the
+                     icosahedral capsid shell (T=3), with a diameter of
+                     approximately 300 Angstroms. Each of them contains a
+                     'core' consisting of an eight-stranded antiparallel beta
+                     barrel with two flanking helices. The capsid protects the
+                     viral genome from the environment, and facilitates
+                     delivery to appropriate target cells (by binding to the
+                     specific poliovirus receptor, PVR). As infection begins,
+                     viral RNA must be freed from the capsid during the
+                     'uncoating' process and penetrate the cell. VP4 protein
+                     lies on the inner surface of the protein shell formed by
+                     VP1, VP2 and VP3. Externalization of VP4 (together with N
+                     terminus of VP1 and shifts of the capsid beta barrels)
+                     initiates irreversible conformational change to the 135S
+                     particles ('A' particles) cell entry intermediate. It
+                     seems that Poliovirus enters different cells by different
+                     mechanisms, and point to a role for virus-induced
+                     intracellular signals in the process. PVR mediates virus
+                     attachment to target cells, initiates the uncoating
+                     process and inducts intracellular signals for virus
+                     entry."
+                     /protein_id="NP_740468.1"
+                     /db_xref="GI:25121840"
+     mat_peptide     950..1765
+                     /locus_tag="PVgp1"
+                     /product="capsid protein VP2"
+                     /experiment="EXISTENCE:x-ray crystallographic
+                     methods[2994218]"
+                     /note="See the comment for coat protein VP4."
+                     /protein_id="NP_740469.1"
+                     /db_xref="GI:25121841"
+     mat_peptide     1766..2479
+                     /locus_tag="PVgp1"
+                     /product="capsid protein VP3"
+                     /experiment="EXISTENCE:x-ray crystallographic methods[
+                     2994218]"
+                     /note="See the comment for coat protein VP4."
+                     /protein_id="NP_740470.1"
+                     /db_xref="GI:25121842"
+     mat_peptide     2480..3385
+                     /locus_tag="PVgp1"
+                     /product="capsid protein VP1"
+                     /experiment="EXISTENCE: x-ray crystallographic
+                     methods[2994218]"
+                     /note="See the comment for coat protein VP4."
+                     /protein_id="NP_740471.1"
+                     /db_xref="GI:25121843"
+     proprotein      3386..5110
+                     /locus_tag="PVgp1"
+                     /product="precursor polypeptide P2"
+                     /experiment="EXISTENCE:Amino acid sequence analysis and
+                     were found to be proteolytic cleavage products of the
+                     polyprotein.[6264310]"
+                     /note="P2 precursor polypeptide is a precursor of
+                     nonstructural proteins, which is released from the
+                     polypeptide chain by proteolytic processing mediated by
+                     virally-encoded proteinases 2A pro to ultimately 3 mature
+                     viral proteins: 2A, 2B and 2C. P2 proteins are primarily
+                     responsible for the biochemical and structural changes
+                     that occur in the infected cell."
+     mat_peptide     3386..3832
+                     /locus_tag="PVgp1"
+                     /product="protease 2A"
+                     /experiment="EXISTENCE:protein expression[3011278]"
+                     /note="Picornain 2A (Protein 2A) is a small
+                     chymotrypsin-like cysteine proteinase. It is responsible
+                     for the cleavage between the P1 and P2 regions. In order
+                     to shut down the capped cellular mRNA transcription,
+                     picornain 2A cleaves the host translation initiation
+                     factor EIF4G1 and induces apoptotic cell death."
+                     /protein_id="NP_740477.1"
+                     /db_xref="GI:25121849"
+     proprotein      3833..5110
+                     /locus_tag="PVgp1"
+                     /product="protein 2BC"
+                     /experiment="EXISTENCE:protein expression[3011278]"
+                     /note="Processing of 2BC by 3Cpro gives rise to the mature
+                     products 2B and 2C, although a large fraction of 2BC
+                     remains uncleaved in picornavirus-infected cells. The
+                     expression of poliovirus 2BC protein in yeast and
+                     mammalian cells leads to a number of metabolic and
+                     morphological alterations, such as growth inhibition,
+                     intracellular membrane proliferation, blockade of the
+                     exocytic pathway, and enhanced membrane permeability."
+     mat_peptide     3833..4123
+                     /locus_tag="PVgp1"
+                     /product="protein 2B"
+                     /experiment="EXISTENCE:protein expression[3011278]"
+                     /note="Protein 2B enhances membrane permeability."
+                     /protein_id="NP_740472.1"
+                     /db_xref="GI:25121844"
+     mat_peptide     4124..5110
+                     /locus_tag="PVgp1"
+                     /product="protein 2C"
+                     /experiment="EXISTENCE:protein expression[3011278]"
+                     /note="Involved in initiation and elongation of RNA
+                     synthesis, RNA encapsidation, virus uncoating and
+                     guanidine resistance (Asn179-Gly mutation). Putative
+                     helicase III.~2C protein (together with 2BC protein)
+                     induces the formation of host cell endoplasmic
+                     reticulum-derived rosette-like membranous structures,
+                     located in the cytoplasm, where the process of viral RNA
+                     replication takes place."
+                     /protein_id="NP_740473.1"
+                     /db_xref="GI:25121845"
+     proprotein      5111..7369
+                     /locus_tag="PVgp1"
+                     /product="precursor polypeptide P3"
+                     /experiment="EXISTENCE:Amino acid sequence analysis
+                     cleavage products of the polyprotein.[6264310]"
+                     /note="Processing of the P3 precursor occurs by two
+                     independent pathways, major and minor. In the major
+                     pathway, processing between 3B and 3C yields 3AB and 3CD.
+                     In the minor pathway, processing between 3A and 3B yields
+                     3A and 3BCD. 3BCD processing yields 3BC and 3D; 3BC
+                     processing yields 3B and 3C."
+     mat_peptide     5111..5437
+                     /locus_tag="PVgp1"
+                     /product="protein 3AB"
+                     /experiment="EXISTENCE:Poliovirus polyprotein processing
+                     by the Gly-Gly mutant evaluated by Western blotting.
+                     [18779320]"
+                     /note="Poliovirus protein 3AB displayes nucleic acid
+                     chaperone activity in promoting the hybridization of
+                     complementary nucleic acids and destabilizing secondary
+                     structure. It also stimulates the rate of binding between
+                     complementary nucleic acid, demonstrates
+                     helix-destabilizing activity, and serves as a donor for
+                     VPg uridylylation."
+                     /protein_id="YP_007353733.1"
+                     /db_xref="GI:440853797"
+     mat_peptide     5111..5371
+                     /locus_tag="PVgp1"
+                     /product="protein 3A"
+                     /experiment="EXISTENCE:Poliovirus polyprotein processing
+                     by the Gly-Gly mutant evaluated by Western blotting.
+                     [18779320]"
+                     /note="Poliovirus protein 3A is a small, membrane-binding
+                     protein that plays multiple roles in viral RNA replication
+                     complex formation and function. In the infected cell, this
+                     protein associates with other viral and cellular proteins
+                     as part of a supramolecular complex."
+                     /protein_id="NP_740474.1"
+                     /db_xref="GI:25121846"
+     proprotein      5372..7369
+                     /locus_tag="PVgp1"
+                     /product="precursor protein 3BCD"
+                     /experiment="EXISTENCE:Poliovirus polyprotein processing
+                     by the Gly-Gly mutant evaluated by Western
+                     blotting.[18779320]"
+                     /note="3BCD precursor protein is a precursor of 3BC and 3D
+                     proteins. Uncleaved precursor 3BCD is one of the
+                     substrates for uridylylation of VPg protein."
+     mat_peptide     5372..5437
+                     /locus_tag="PVgp1"
+                     /product="viral protein genome-linked"
+                     /experiment="EXISTENCE:Poliovirus polyprotein processing
+                     by the Gly-Gly mutant evaluated by Western blotting.
+                     [18779320]"
+                     /note="VPg (3B), a small protein that binds viral RNA and
+                     is necessary for synthesis of viral positive and negative
+                     strand RNA."
+                     /protein_id="NP_740475.1"
+                     /db_xref="GI:25121847"
+     mat_peptide     5438..7369
+                     /locus_tag="PVgp1"
+                     /product="protein 3CD"
+                     /experiment="EXISTENCE:Poliovirus polyprotein processing
+                     by the Gly-Gly mutant evaluated by Western blotting.
+                     [18779320]"
+                     /note="3CD protein lacks polymerase activity, but
+                     possesses protease activity with substrate recognition
+                     properties distinct from those of 3C protein. It was shown
+                     that cleavage of the viral capsid proteins, located in the
+                     N-terminal portion of the poliovirus polyprotein, requires
+                     3CD-catalyzed proteolysis. 3CD protease activity has been
+                     implicated in cleavage of several host proteins. In
+                     addition to its proteolytic activities, 3CD also involved
+                     in viral RNA replication process. The protein binds to the
+                     cloverleaf structure at the 5? terminus of poliovirus RNA,
+                     and this binding was shown to be important for virus
+                     replication. 3CD also stimulates uridylylation of viral
+                     protein VPg, catalyzed by 3D, which is required for
+                     initiation of RNA replication, by binding to the template
+                     for uridylylation on the cis-acting replication element.
+                     3CD protein interacts with the cellular heterogeneous
+                     nuclear ribonucleoprotein (hnRNP) C1/C2, which forms a
+                     specific RNP complex with the poliovirus 3? nontranslated
+                     region that is thought to be important for replication.
+                     3CD (as well as another poliovirus protein, 3A), induces
+                     the recruitment to membranes of cellular proteins from the
+                     family of small GTPases, designated Arfs (ADP ribosylation
+                     factors)."
+                     /protein_id="YP_007353734.1"
+                     /db_xref="GI:440853798"
+     mat_peptide     5438..5986
+                     /locus_tag="PVgp1"
+                     /product="protease 3C"
+                     /experiment="EXISTENCE:Poliovirus polyprotein processing
+                     by the Gly-Gly mutant evaluated by Western
+                     blotting.[18779320]"
+                     /note="Chymotrypsin-like cystein proteinase 3C. Viral 3C
+                     protease (3Cpro) plays a major role in translation
+                     regulation. It cleaves poly(A)-binding protein (PABP) and
+                     removes the C-terminal domain (CTD) that interacts with
+                     several translation factors. 3C protein has been shown to
+                     function as a stimulatory factor for 3Dpol in the VPg
+                     uridylylation reaction."
+                     /protein_id="NP_740476.2"
+                     /db_xref="GI:62871476"
+     mat_peptide     5987..7369
+                     /locus_tag="PVgp1"
+                     /product="RNA-directed RNA polymerase"
+                     /experiment="EXISTENCE:Poliovirus polyprotein processing
+                     by the Gly-Gly mutant evaluated by Western blotting.
+                     [18779320]"
+                     /note="3D; The RNA-dependent RNA-polymerase, 3Dpol, is an
+                     essential component in genome for the replication of
+                     single stranded RNA. 3Dpol catalyze two independend
+                     half-reactions leading to the attachment of VPg protein to
+                     the 5' end of viral RNA. First, VPg is uridylylated to
+                     produce VPg-pUpU; second, VPg-pUpU serves as a primer for
+                     full-length RNA synthesis"
+                     /protein_id="NP_740478.2"
+                     /db_xref="GI:62871477"
+     ncRNA           7370..7440
+                     /ncRNA_class="other"
+                     /experiment="EXISTENCE:chemical sequencing[6264310 ]"
+                     /note="The genomic RNA 3' noncoding region is believed to
+                     be a major cis-acting molecular genetic determinant for
+                     regulating picornavirus negative-strand RNA synthesis by
+                     promoting replication complex recognition. This region
+                     predicted to exhibit conserved secondary structures
+                     consisting of two stem-loops: X and Y. Furthermore, a
+                     proposed tertiary 'kissing' interaction involving base
+                     pairing between the loop regions of stem-loops X and Y was
+                     suggested."
+     stem_loop       7374..7417
+                     /note="stem-loop Y"
+     stem_loop       7423..7440
+                     /note="stem-loop X"
+ORIGIN      
+        1 ttaaaacagc tctggggttg tacccacccc agaggcccac gtggcggcta gtactccggt
+       61 attgcggtac ccttgtacgc ctgttttata ctcccttccc gtaacttaga cgcacaaaac
+      121 caagttcaat agaagggggt acaaaccagt accaccacga acaagcactt ctgtttcccc
+      181 ggtgatgtcg tatagactgc ttgcgtggtt gaaagcgacg gatccgttat ccgcttatgt
+      241 acttcgagaa gcccagtacc acctcggaat cttcgatgcg ttgcgctcag cactcaaccc
+      301 cagagtgtag cttaggctga tgagtctgga catccctcac cggtgacggt ggtccaggct
+      361 gcgttggcgg cctacctatg gctaacgcca tgggacgcta gttgtgaaca aggtgtgaag
+      421 agcctattga gctacataag aatcctccgg cccctgaatg cggctaatcc caacctcgga
+      481 gcaggtggtc acaaaccagt gattggcctg tcgtaacgcg caagtccgtg gcggaaccga
+      541 ctactttggg tgtccgtgtt tccttttatt ttattgtggc tgcttatggt gacaatcaca
+      601 gattgttatc ataaagcgaa ttggattggc catccggtga aagtgagact cattatctat
+      661 ctgtttgctg gatccgctcc attgagtgtg tttactctaa gtacaatttc aacagttatt
+      721 tcaatcagac aattgtatca taatgggtgc tcaggtttca tcacagaaag tgggcgcaca
+      781 tgaaaactca aatagagcgt atggtggttc taccattaat tacaccacca ttaattatta
+      841 tagagattca gctagtaacg cggcttcgaa acaggacttc tctcaagacc cttccaagtt
+      901 caccgagccc atcaaggatg tcctgataaa aacagcccca atgctaaact cgccaaacat
+      961 agaggcttgc gggtatagcg atagagtact gcaattaaca ctgggaaact ccactataac
+     1021 cacacaggag gcggctaatt cagtagtcgc ttatgggcgt tggcctgaat atctgaggga
+     1081 cagcgaagcc aatccagtgg accagccgac agaaccagac gtcgctgcat gcaggtttta
+     1141 tacgctagac accgtgtctt ggacgaaaga gtcgcgaggg tggtggtgga agttgcctga
+     1201 tgcactgagg gacatgggac tctttgggca aaatatgtac taccactacc taggtaggtc
+     1261 cgggtacacc gtgcatgtac agtgtaacgc ctccaaattc caccaggggg cactaggggt
+     1321 attcgccgta ccagagatgt gtctggccgg ggatagcaac accactacca tgcacaccag
+     1381 ctatcaaaat gccaatcctg gcgagaaagg aggcactttc acgggtacgt tcactcctga
+     1441 caacaaccag acatcacctg cccgcaggtt ctgcccggtg gattacctcc ttggaaatgg
+     1501 cacgttgttg gggaatgcct ttgtgttccc gcaccagata ataaacctac ggaccaacaa
+     1561 ctgtgctaca ctggtactcc cttacgtgaa ctccctctcg atagatagta tggtaaagca
+     1621 caataattgg ggaattgcaa tattaccatt ggccccatta aattttgcta gtgagtcctc
+     1681 cccagagatt ccaatcacct tgaccatagc ccctatgtgc tgtgagttca atggattaag
+     1741 aaacatcacc ctgccacgct tacagggcct gccggtcatg aacacccctg gtagcaatca
+     1801 atatcttact gcagacaact tccagtcacc gtgtgcgctg cctgaatttg atgtgacccc
+     1861 acctattgac atacccggtg aagtaaagaa catgatggaa ttggcagaaa tcgacaccat
+     1921 gattcccttt gacttaagtg ccacaaaaaa gaacaccatg gaaatgtata gggttcggtt
+     1981 aagtgacaaa ccacatacag acgatcccat actctgcctg tcactctctc cagcttcaga
+     2041 tcctaggttg tcacatacta tgcttggaga aatcctaaat tactacacac actgggcagg
+     2101 atccctgaag ttcacgtttc tgttctgtgg attcatgatg gcaactggca aactgttggt
+     2161 gtcatacgcg cctcctggag ccgacccacc aaagaagcgt aaggaggcga tgttgggaac
+     2221 acatgtgatc tgggacatag gactgcagtc ctcatgtact atggtagtgc catggattag
+     2281 caacaccacg tatcggcaaa ccatagatga tagtttcacc gaaggcggat acatcagcgt
+     2341 cttctaccaa actagaatag tcgtccctct ttcgacaccc agagagatgg acatccttgg
+     2401 ttttgtgtca gcgtgtaatg acttcagcgt gcgcttgttg cgagatacca cacatataga
+     2461 gcaaaaagcg ctagcacagg ggttaggtca gatgcttgaa agcatgattg acaacacagt
+     2521 ccgtgaaacg gtgggggcgg caacatctag agacgctctc ccaaacactg aagccagtgg
+     2581 accaacacac tccaaggaaa ttccggcact caccgcagtg gaaactgggg ccacaaatcc
+     2641 actagtccct tctgatacag tgcaaaccag acatgttgta caacataggt caaggtcaga
+     2701 gtctagcata gagtctttct tcgcgcgggg tgcatgcgtg accattatga ccgtggataa
+     2761 cccagcttcc accacgaata aggataagct atttgcagtg tggaagatca cttataaaga
+     2821 tactgtccag ttacggagga aattggagtt cttcacctat tctagatttg atatggaact
+     2881 tacctttgtg gttactgcaa atttcactga gactaacaat gggcatgcct taaatcaagt
+     2941 gtaccaaatt atgtacgtac caccaggcgc tccagtgccc gagaaatggg acgactacac
+     3001 atggcaaacc tcatcaaatc catcaatctt ttacacctac ggaacagctc cagcccggat
+     3061 ctcggtaccg tatgttggta tttcgaacgc ctattcacac ttttacgacg gtttttccaa
+     3121 agtaccactg aaggaccagt cggcagcact aggtgactcc ctttatggtg cagcatctct
+     3181 aaatgacttc ggtattttgg ctgttagagt agtcaatgat cacaacccga ccaaggtcac
+     3241 ctccaaaatc agagtgtatc taaaacccaa acacatcaga gtctggtgcc cgcgtccacc
+     3301 gagggcagtg gcgtactacg gccctggagt ggattacaag gatggtacgc ttacacccct
+     3361 ctccaccaag gatctgacca catatggatt cggacaccaa aacaaagcgg tgtacactgc
+     3421 aggttacaaa atttgcaact accacttggc cactcaggat gatttgcaaa acgcagtgaa
+     3481 cgtcatgtgg agtagagacc tcttagtcac agaatcaaga gcccagggca ccgattcaat
+     3541 cgcaaggtgc aattgcaacg caggggtgta ctactgcgag tctagaagga aatactaccc
+     3601 agtatccttc gttggcccaa cgttccagta catggaggct aataactatt acccagctag
+     3661 gtaccagtcc catatgctca ttggccatgg attcgcatct ccaggggatt gtggtggcat
+     3721 actcagatgt caccacgggg tgatagggat cattactgct ggtggcgaag ggttggttgc
+     3781 attttcagac attagagact tgtatgccta cgaagaagaa gccatggaac aaggcatcac
+     3841 caattacata gagtcacttg gggccgcatt tggaagtgga tttactcagc agattagcga
+     3901 caaaataaca gagttgacca atatggtgac cagtaccatc actgaaaagc tacttaagaa
+     3961 cttgatcaag atcatatcct cactagttat tataactagg aactatgaag acaccacaac
+     4021 agtgctcgct accctggccc ttcttgggtg tgatgcttca ccatggcagt ggcttagaaa
+     4081 gaaagcatgc gatgttctgg agatacctta tgtcatcaag caaggtgaca gttggttgaa
+     4141 gaagtttact gaagcatgca acgcagctaa gggactggag tgggtgtcaa acaaaatctc
+     4201 aaaattcatt gattggctca aggagaaaat tatcccacaa gctagagata agttggaatt
+     4261 tgtaacaaaa cttagacaac tagaaatgct ggaaaaccaa atctcaacta tacaccaatc
+     4321 atgccctagt caggaacacc aggaaattct attcaataat gtcagatggt tatccatcca
+     4381 gtctaagagg tttgcccctc tttacgcagt ggaagccaaa agaatacaga aactagagca
+     4441 tactattaac aactacatac agttcaagag caaacaccgt attgaaccag tatgtttgct
+     4501 agtacatggc agccccggaa caggtaaatc tgtagcaacc aacctgattg ctagagccat
+     4561 agctgaaaga gaaaacacgt ccacgtactc gctacccccg gatccatcac acttcgacgg
+     4621 atacaaacaa cagggagtgg tgattatgga cgacctgaat caaaacccag atggtgcgga
+     4681 catgaagctg ttctgtcaga tggtatcaac agtggagttt ataccaccca tggcatccct
+     4741 ggaggagaaa ggaatcctgt ttacttcaaa ttacgttcta gcatccacaa actcaagcag
+     4801 aatttccccc cccactgtgg cacacagtga tgcattagcc aggcgctttg cgttcgacat
+     4861 ggacattcag gtcatgaatg agtattctag agatgggaaa ttgaacatgg ccatggctac
+     4921 tgaaatgtgt aagaactgtc accaaccagc aaactttaag agatgctgtc ctttagtgtg
+     4981 tggtaaggca attcaattaa tggacaaatc ttccagagtt agatacagta ttgaccagat
+     5041 cactacaatg attatcaatg agagaaacag aagatccaac attggcaatt gtatggaggc
+     5101 tttgtttcaa ggaccactcc agtataaaga cttgaaaatt gacatcaaga cgagtccccc
+     5161 tcctgaatgt atcaatgact tgctccaagc agttgactcc caggaggtga gagattactg
+     5221 tgagaagaag ggttggatag tcaacatcac cagccaggtt caaacagaaa ggaacatcaa
+     5281 cagggcaatg acaattctac aagcggtgac aaccttcgcc gcagtggctg gagttgtcta
+     5341 tgtcatgtat aaactgtttg ctggacacca gggagcatac actggtttac caaacaaaaa
+     5401 acccaacgtg cccaccattc ggacagcaaa ggtacaagga ccagggttcg attacgcagt
+     5461 ggctatggct aaaagaaaca ttgttacagc aactactagc aagggagagt tcactatgtt
+     5521 aggagtccac gacaacgtgg ctattttacc aacccacgct tcacctggtg aaagcattgt
+     5581 gatcgatggc aaagaagtgg agatcttgga tgccaaagcg ctcgaagatc aagcaggaac
+     5641 caatcttgaa atcactataa tcactctaaa gagaaatgaa aagttcagag acattagacc
+     5701 acatatacct actcaaatca ctgagacaaa tgatggagtc ttgatcgtga acactagcaa
+     5761 gtaccccaat atgtatgttc ctgtcggtgc tgtgactgaa cagggatatc taaatctcgg
+     5821 tgggcgccaa actgctcgta ctctaatgta caactttcca accagagcag gacagtgtgg
+     5881 tggagtcatc acatgtactg ggaaagtcat cgggatgcat gttggtggga acggttcaca
+     5941 cgggtttgca gcggccctga agcgatcata cttcactcag agtcaaggtg aaatccagtg
+     6001 gatgagacct tcgaaggaag tgggatatcc aatcataaat gccccgtcca aaaccaagct
+     6061 tgaacccagt gctttccact atgtgtttga aggggtgaag gaaccagcag tcctcactaa
+     6121 aaacgatccc aggcttaaga cagactttga ggaggcaatt ttctccaagt acgtgggtaa
+     6181 caaaattact gaagtggatg agtacatgaa agaggcagta gaccactatg ctggccagct
+     6241 catgtcacta gacatcaaca cagaacaaat gtgcttggag gatgccatgt atggcactga
+     6301 tggtctagaa gcacttgatt tgtccaccag tgctggctac ccttatgtag caatgggaaa
+     6361 gaagaagaga gacatcttga acaaacaaac cagagacact aaggaaatgc aaaaactgct
+     6421 cgacacatat ggaatcaacc tcccactggt gacttatgta aaggatgaac ttagatccaa
+     6481 aacaaaggtt gagcagggga aatccagatt aattgaagct tctagtttga atgactcagt
+     6541 ggcaatgaga atggcttttg ggaacctata tgctgctttt cacaaaaacc caggagtgat
+     6601 aacaggttca gcagtggggt gcgatccaga tttgttttgg agcaaaattc cggtattgat
+     6661 ggaagagaag ctgtttgctt ttgactacac agggtatgat gcatctctca gccctgcttg
+     6721 gttcgaggca ctaaagatgg tgcttgagaa aatcggattc ggagacagag ttgactacat
+     6781 cgactaccta aaccactcac accacctgta caagaataaa acatactgtg tcaagggcgg
+     6841 tatgccatct ggctgctcag gcacttcaat ttttaactca atgattaaca acttgattat
+     6901 caggacactc ttactgaaaa cctacaaggg catagattta gaccacctaa aaatgattgc
+     6961 ctatggtgat gatgtaattg cttcctaccc ccatgaagtt gacgctagtc tcctagccca
+     7021 atcaggaaaa gactatggac taactatgac tccagctgac aaatcagcta catttgaaac
+     7081 agtcacatgg gagaatgtaa cattcttgaa gagattcttc agggcagacg agaaataccc
+     7141 atttcttatt catccagtaa tgccaatgaa ggaaattcat gaatcaatta gatggactaa
+     7201 agatcctagg aacactcagg atcacgttcg ctctctgtgc cttttagctt ggcacaatgg
+     7261 cgaagaagaa tataacaaat tcctagctaa aatcaggagt gtgccaattg gaagagcttt
+     7321 attgctccca gagtactcaa cattgtaccg ccgttggctt gactcatttt agtaacccta
+     7381 cctcagtcga attggattgg gtcatactgt tgtaggggta aatttttctt taattcggag
+//
+

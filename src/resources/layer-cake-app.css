@@ -1,0 +1,89 @@
+.no-borders {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+.no-margins {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.full-node {
+  width: 100% !important;
+  height: 100% !important;
+}
+.no-scrollbars {
+  overflow: hidden;
+}
+
+
+.layer-cake-app .table-presentation {
+  width: 100%;
+}
+.layer-cake-app .top-bar {
+  padding: 0.6em 0 0.6em 0;
+  font-family: 'Open Sans', sans-serify;
+  display: flex;
+  justify-content: center;
+}
+
+.layer-cake-app .top-bar .color-bar {
+  display: inline-block;
+}
+
+.layer-cake-app .top-bar > span {
+  display: inline-block;
+  line-height: 0.5em;
+}
+
+.layer-cake-app .top-bar > span > br {
+  display: block;
+  margin: 0;
+}
+.layer-cake-app .top-bar .component {
+  margin: 0 0.5em 0 0.5em;
+  vertical-align: top;
+  text-align: center;
+  color: gray;
+}
+.layer-cake-app .top-bar .component > label {
+  display: inline-table;
+}
+.layer-cake-app .top-bar .separator {
+  display: inline-block;
+  width: 1px;
+  height: 3em;
+  background-color: lightgray;
+}
+
+.layer-cake-app .main-panel {
+  margin: 0.5em;
+  border: none;
+}
+.layer-cake-app {
+  font-family: 'Open Sans', sans-serify;
+}
+.layer-cake-app .dijitButton .dijitButtonContents .dijitButtonText {
+  font-family: 'Open Sans', sans-serify;
+}
+* {
+  outline: none;
+}
+.layer-cake-app .no-borders {
+  overflow: hidden;
+}
+.layer-cake-app .violet-button .dijitButtonNode {
+  border-color: violet;
+  background: violet;
+}
+
+.info-sign::after {
+  content: "\f05a";
+  font-family: FontAwesome;
+  cursor: pointer;
+  padding-left: 4px;
+}
+.info-icon {
+  font-family: FontAwesome;
+  cursor: pointer;
+  color: gray;
+}

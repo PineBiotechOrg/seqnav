@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>BinsMap.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>BinsMap.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>,
+        <span class="hljs-string">"dijit/_Widget"</span>, <span class="hljs-string">"dijit/_TemplatedMixin"</span>,
+        <span class="hljs-string">"d3/d3"</span>,
+        <span class="hljs-string">"./ProteinsBar"</span>, <span class="hljs-string">"./BinLayerCakeHeader"</span>, <span class="hljs-string">"./LayerCake"</span>, <span class="hljs-string">"./CoverageGraph"</span>,
+        <span class="hljs-string">"dojo/i18n!./../nls/base"</span>,
+        <span class="hljs-string">"xstyle/css!./../resources/layer-cake-header.css"</span>],
+(declare, lang,
+ _Widget, _TemplatedMixin,
+ d3,
+ ProteinsBar, BinLayerCakeHeader, LayerCake, CoverageGraph,
+ strings) -&gt;
+
+  declare [_Widget, _TemplatedMixin], {
+    templateString: <span class="hljs-string">"&lt;svg&gt;&lt;/svg&gt;"</span>,
+
+    labelWidth: <span class="hljs-number">130</span>,
+
+    postCreate: <span class="hljs-function">-&gt;</span>
+      @inherited arguments
+
+      @area = d3.select @domNode
+      @proteinsBar = <span class="hljs-keyword">new</span> ProteinsBar @area.append(<span class="hljs-string">"g"</span>), @labelWidth
+      @coverageGraph = <span class="hljs-keyword">new</span> CoverageGraph @area.append(<span class="hljs-string">"g"</span>), @labelWidth, strings.binsMap.tooltipIndex
+      @layerCakeHeader = <span class="hljs-keyword">new</span> BinLayerCakeHeader(@area.append(<span class="hljs-string">"g"</span>), @labelWidth)
+      offset = @layerCakeHeader.getHeight() + <span class="hljs-number">20</span>
+      @cake = <span class="hljs-keyword">new</span> LayerCake(@domNode, @area.append(<span class="hljs-string">"g"</span>).attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(0, <span class="hljs-subst">#{offset}</span>)"</span>), @labelWidth,
+                            <span class="hljs-function">(<span class="hljs-params">(x)</span> -&gt;</span> x.binNumber), <span class="hljs-function">(<span class="hljs-params">(x)</span> -&gt;</span> x.populationIndex), <span class="hljs-function">(<span class="hljs-params">(x)</span> -&gt;</span> x.rate),
+                            <span class="hljs-string">"column"</span>)
+
+      @proteinsBar.<span class="hljs-literal">on</span> <span class="hljs-string">"mouseClick"</span>, @proteinMouseClickHandler.bind(@)
+      @cake.<span class="hljs-literal">on</span> <span class="hljs-string">"mouseClick"</span>, @cakeMouseClickHandler.bind(@)
+
+    setData: <span class="hljs-function"><span class="hljs-params">(proteins, table, fitnessInfo)</span> -&gt;</span>
+      @proteinsBar.setData proteins, <span class="hljs-number">1</span>, table.getNucleotidesCount()
+      @coverageGraph.setData table.getHighestCoverage(), table.getPopulations(), table.getAllCoverages(), <span class="hljs-number">1</span>
+      @layerCakeHeader.setData table.getAverages(), table.getNucleotidesRange()
+      @cake.setData table.getPopulations(), table.getAllBins(), fitnessInfo, table.getBinCount()
+
+      offset = @proteinsBar.getHeight()
+      @coverageGraph.move <span class="hljs-number">0</span>, offset
+      offset += @coverageGraph.getHeight()
+      @layerCakeHeader.move <span class="hljs-number">0</span>, offset
+      offset += @layerCakeHeader.getHeight() + <span class="hljs-number">20</span>
+      @cake.move <span class="hljs-number">0</span>, offset
+
+      @proteins = proteins
+      @table = table
+      @fitnessInfo = fitnessInfo
+
+    setModel: <span class="hljs-function"><span class="hljs-params">(model)</span> -&gt;</span> @model = model
+
+    currentThreshold: <span class="hljs-number">0</span>
+    setLowThreshold: <span class="hljs-function"><span class="hljs-params">(threshold)</span> -&gt;</span>
+      @currentThreshold = threshold
+      @cake.setLowThreshold(threshold / <span class="hljs-number">100</span>)
+
+    setFitnessInfo: <span class="hljs-function"><span class="hljs-params">(fitnessInfo)</span> -&gt;</span>
+      @fitnessInfo = fitnessInfo
+      @cake.setFitness(fitnessInfo)
+
+    proteinMouseClickHandler: <span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span>
+      @onProteinClick {table: @table, protein: d, threshold: @currentThreshold, proteins: @proteins, fitnessInfo: @fitnessInfo}
+
+    cakeMouseClickHandler: <span class="hljs-function"><span class="hljs-params">(evt)</span> -&gt;</span>
+      @onBinClick lang.mixin({table: @table, threshold: @currentThreshold, fitnessInfo: @fitnessInfo}, evt)
+
+    onProteinClick: <span class="hljs-function">-&gt;</span>
+    onBinClick: <span class="hljs-function">-&gt;</span>
+
+    resize: <span class="hljs-function"><span class="hljs-params">(s)</span> -&gt;</span>
+      @area.attr(<span class="hljs-string">"width"</span>, s.w)
+        .attr(<span class="hljs-string">"height"</span>, s.h)
+      @proteinsBar.resize s
+      @coverageGraph.resize s
+      @layerCakeHeader.resize s
+      @cake.resize s
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

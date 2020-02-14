@@ -1,0 +1,18 @@
+Gene Name ,Type,Start Nucelotide ,End Nucleotide ,Start Protein,End Protein,Level ,PDB file 
+5'UTR,5'UTR,1,96,,,,
+flavivirus polyprotein gene,Protein ,97,10272,1,3391,1,
+anchored capsid protein C,Protein ,97,438,1,114,2,
+capsid protein C,Protein ,97,396,1,100,2,
+membrane glycoprotein precursor M,Protein ,439,936,115,280,2,
+protein pr,Protein ,439,711,115,205,3,
+membrane glycoprotein M,Protein ,712,936,206,280,3,Gylcoprotein-4UT6
+envelope protein E,Protein ,937,2421,281,775,2,Envelope_E-4X42
+nonstructural protein NS1,Protein ,2422,3477,776,1127,2,NS1-4O6B
+nonstructural protein NS2A,Protein ,3478,4131,1128,1345,2,NS2A-2M0S
+nonstructural protein NS2B,Protein ,4132,4521,1346,1475,2,NS2B-NS3_4M9M
+nonstructural protein NS3,Protein ,4522,6375,1476,2093,2,NS3-2WHX
+nonstructural protein NS4A,Protein ,6376,6756,2094,2220,2,
+protein 2K,Protein ,6757,6825,2221,2243,2,
+nonstructural protein NS4B,Protein ,6826,7569,2244,2491,2,
+RNA-dependent RNA polymerase NS5,Protein ,7570,10269,2492,3391,2,NS5-5DTO
+3' UTR ,"3""UTR",10273,10723,,,,

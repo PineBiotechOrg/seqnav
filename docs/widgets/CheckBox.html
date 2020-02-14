@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>CheckBox.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>CheckBox.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define [<span class="hljs-string">"dojo/_base/declare"</span>,
+        <span class="hljs-string">"dijit/_Widget"</span>,
+        <span class="hljs-string">"xstyle/css!./../resources/checkbox.css"</span>],
+(declare,
+ _Widget) -&gt;
+
+  declare _Widget, {
+
+    width: <span class="hljs-number">16</span>
+    height: <span class="hljs-number">16</span>
+
+    checked: <span class="hljs-literal">false</span>
+
+    constructor: <span class="hljs-function"><span class="hljs-params">({parent, state, label})</span> -&gt;</span>
+      @container = parent.append(<span class="hljs-string">"g"</span>)
+        .classed(<span class="hljs-string">"check-box"</span>, <span class="hljs-literal">true</span>)
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"click"</span>, @mouseClickHandler.bind(@))
+
+      rect = @container.append(<span class="hljs-string">"rect"</span>)
+        .attr(<span class="hljs-string">"width"</span>, @width)
+        .attr(<span class="hljs-string">"height"</span>, @height)
+
+      @polygon = @container.append(<span class="hljs-string">"polygon"</span>)
+        .attr(<span class="hljs-string">"points"</span>, <span class="hljs-string">"10.1,8.7 3.5,5.9 2.1,6.3 10.1,14.4 21.6,0.0 19.6,0.0"</span>)
+
+      @label = label
+      @text = @container.append(<span class="hljs-string">"text"</span>)
+        .attr(<span class="hljs-string">"x"</span>, @width + <span class="hljs-number">5</span>)
+        .attr(<span class="hljs-string">"y"</span>, @height / <span class="hljs-number">2</span>)
+      @text.text(label)
+
+      @setState state
+
+    getState: <span class="hljs-function">-&gt;</span> @checked
+
+    setState: <span class="hljs-function"><span class="hljs-params">(newValue)</span> -&gt;</span>
+      @checked = newValue
+      @polygon.style(<span class="hljs-string">"display"</span>, <span class="hljs-keyword">if</span> (@checked) <span class="hljs-keyword">then</span> <span class="hljs-string">"inline"</span> <span class="hljs-keyword">else</span> <span class="hljs-string">"none"</span>)
+
+    mouseClickHandler: <span class="hljs-function">-&gt;</span>
+      @setState !@checked
+      @onMouseClick {label: @label, state: @checked}
+
+    onMouseClick: <span class="hljs-function"><span class="hljs-params">(evt)</span> -&gt;</span>
+
+    getWidth: <span class="hljs-function">-&gt;</span> @width
+    getHeight: <span class="hljs-function">-&gt;</span> @height
+
+    move: <span class="hljs-function"><span class="hljs-params">(x, y)</span> -&gt;</span>
+      @container.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{x}</span>, <span class="hljs-subst">#{y}</span>)"</span>)
+      @
+
+    fill: <span class="hljs-function"><span class="hljs-params">(color)</span> -&gt;</span>
+      @text.style(<span class="hljs-string">"fill"</span>, color)
+      @
+
+    destroy: <span class="hljs-function">-&gt;</span>
+      @inherited arguments
+  }</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

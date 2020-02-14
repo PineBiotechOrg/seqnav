@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>ProteinsBar.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>ProteinsBar.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/Evented"</span>,
+        <span class="hljs-string">"dijit/Tooltip"</span>,
+        <span class="hljs-string">"underscore/underscore"</span>,
+        <span class="hljs-string">"d3/d3"</span>,
+        <span class="hljs-string">"./Ruler"</span>,
+        <span class="hljs-string">"dojo/i18n!./../nls/base"</span>,
+        <span class="hljs-string">"xstyle/css!./../resources/proteins-bar.css"</span>],
+(declare, lang, Evented,
+ Tooltip,
+ _,
+ d3,
+ Ruler,
+ strings) -&gt;
+<span class="hljs-function">
+  <span class="hljs-title">keyMaker</span> = <span class="hljs-params">(obj)</span> -&gt;</span> <span class="hljs-string">"<span class="hljs-subst">#{obj.gene}</span>.<span class="hljs-subst">#{obj.level}</span>"</span>
+<span class="hljs-function">
+  <span class="hljs-title">gene</span> = <span class="hljs-params">(d)</span> -&gt;</span> d.gene
+
+  declare Evented, {
+    proteinHeight: <span class="hljs-number">30</span>
+    proteinsGap: <span class="hljs-number">10</span>
+
+    constructor: <span class="hljs-function"><span class="hljs-params">(area, labelWidth, withRuler)</span> -&gt;</span>
+      @area = area
+      @labelWidth = labelWidth
+      @ruler = <span class="hljs-keyword">new</span> Ruler area, labelWidth <span class="hljs-keyword">if</span> withRuler
+      @rulerHeight = <span class="hljs-keyword">if</span> (@ruler) <span class="hljs-keyword">then</span> @ruler.getHeight() <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+      textElement = area.append(<span class="hljs-string">"text"</span>)
+        .classed(<span class="hljs-string">"protein-header"</span>, <span class="hljs-literal">true</span>)
+        .attr(<span class="hljs-string">"y"</span>, @proteinHeight / <span class="hljs-number">2</span> + @rulerHeight)
+      textElement.append(<span class="hljs-string">"tspan"</span>)
+        .text(<span class="hljs-string">"\uF05A"</span>)
+        .classed(<span class="hljs-string">"info-icon"</span>, <span class="hljs-literal">true</span>)
+      textElement.append(<span class="hljs-string">"tspan"</span>)
+        .attr(<span class="hljs-string">"dx"</span>, <span class="hljs-number">4</span>)
+        .text(strings.proteinsBar.proteins)
+      textElement
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"mouseenter"</span>, Tooltip.show.bind(<span class="hljs-literal">null</span>, strings.proteinsBar.proteinsTooltip, textElement[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]))
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"mouseleave"</span>, Tooltip.hide.bind(<span class="hljs-literal">null</span>, textElement[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]))
+
+      @selectedArea = area.append(<span class="hljs-string">"rect"</span>)
+        .classed(<span class="hljs-string">"highlighted-proteins-area"</span>, <span class="hljs-literal">true</span>)
+
+      @rectangleAreas = area.append(<span class="hljs-string">"g"</span>)
+        .attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{labelWidth}</span>, 0)"</span>)
+        .classed(<span class="hljs-string">"proteins-bar"</span>, <span class="hljs-literal">true</span>)
+
+    setData: <span class="hljs-function"><span class="hljs-params">(proteins, firstNucleotide, lastNucleotide)</span> -&gt;</span>
+      @proteins = proteins
+      @ruler.setRange(firstNucleotide, lastNucleotide) <span class="hljs-keyword">if</span> @ruler
+      @firstNucleotide = firstNucleotide
+      @lastNucleotide = lastNucleotide
+
+      text = @rectangleAreas.selectAll(<span class="hljs-string">"text"</span>).data(proteins.getAllProteins(), keyMaker)
+      text.enter().append(<span class="hljs-string">"text"</span>)
+        .attr(<span class="hljs-string">"y"</span>, <span class="hljs-function"><span class="hljs-params">(d)</span> =&gt;</span> @proteinHeight / <span class="hljs-number">2</span> + d.level * (@proteinHeight + @proteinsGap) + @rulerHeight)
+        .filter(<span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> d.type <span class="hljs-keyword">is</span> <span class="hljs-string">"PROTEIN"</span>)
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"click"</span>, @mouseClickHandler.bind(@))
+      text.exit().remove()
+      text.text(gene)
+
+      rect = @rectangleAreas.selectAll(<span class="hljs-string">"rect"</span>).data(proteins.getAllProteins(), keyMaker)
+      rect.enter().append(<span class="hljs-string">"rect"</span>)
+        .attr(<span class="hljs-string">"height"</span>, @proteinHeight)
+        .attr(<span class="hljs-string">"y"</span>, <span class="hljs-function"><span class="hljs-params">(d)</span> =&gt;</span> d.level * (@proteinHeight + @proteinsGap) + @rulerHeight)
+        .filter(<span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> d.type <span class="hljs-keyword">is</span> <span class="hljs-string">"PROTEIN"</span>)
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"click"</span>, @mouseClickHandler.bind(@))
+      title = rect.append(<span class="hljs-string">"title"</span>)
+      rect.exit().remove()
+      title.text(gene)
+
+      @resize @currentSize <span class="hljs-keyword">if</span> @currentSize
+
+    highlight: <span class="hljs-function"><span class="hljs-params">(leftEdge, rightEdge)</span> -&gt;</span>
+      @leftEdge = leftEdge
+      @rightEdge = rightEdge
+      <span class="hljs-keyword">if</span> (leftEdge &lt; rightEdge)
+        @selectedArea.attr(<span class="hljs-string">"height"</span>, @proteins.getLevelsCount() * (@proteinHeight + @proteinsGap) - @proteinsGap + @rulerHeight)
+
+      @resize @currentSize <span class="hljs-keyword">if</span> @currentSize
+
+    mouseClickHandler: <span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> @emit <span class="hljs-string">"mouseClick"</span>, d
+
+    resize: <span class="hljs-function"><span class="hljs-params">(s)</span> -&gt;</span>
+      @currentSize = s
+      <span class="hljs-keyword">if</span> (@proteins)
+        firstNucleotide = @firstNucleotide
+        scale = (s.w - @labelWidth) / (@lastNucleotide - firstNucleotide + <span class="hljs-number">1</span>)
+        @rectangleAreas.selectAll(<span class="hljs-string">"rect"</span>)
+          .attr(<span class="hljs-string">"x"</span>, <span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> (d.start - firstNucleotide) * scale)
+          .attr(<span class="hljs-string">"width"</span>, <span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> (d.end - d.start) * scale - <span class="hljs-number">2</span>)
+        @rectangleAreas.selectAll(<span class="hljs-string">"text"</span>)
+          .attr(<span class="hljs-string">"x"</span>, <span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> (d.start - firstNucleotide) * scale + ((d.end - d.start) * scale) / <span class="hljs-number">2</span>)
+          .each(<span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span>
+            maxWidth = (d.end - d.start) * scale - <span class="hljs-number">2</span>
+            <span class="hljs-keyword">if</span> (@getComputedTextLength() &gt; maxWidth)
+              @textContent = d.short
+              <span class="hljs-keyword">if</span> (@getComputedTextLength() &gt; maxWidth)
+                @textContent = <span class="hljs-string">""</span>
+          )
+      <span class="hljs-keyword">if</span> (@leftEdge &lt; @rightEdge)
+        @selectedArea
+          .attr(<span class="hljs-string">"x"</span>, @labelWidth + @leftEdge * scale)
+          .attr(<span class="hljs-string">"width"</span>, (@rightEdge - @leftEdge) * scale)
+
+      @ruler.resize s <span class="hljs-keyword">if</span> @ruler
+
+    getHeight: <span class="hljs-function">-&gt;</span> @proteins.getLevelsCount() * (@proteinHeight + @proteinsGap) -
+                     @proteinsGap +
+                     @rulerHeight +
+                     <span class="hljs-number">20</span>
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

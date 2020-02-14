@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>SeqNav: Dengue</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta charset="UTF-8">
+
+  <style type="text/css">
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+  <script src="../javascript/dtk/dojo/dojo.js"
+      data-dojo-config="async: true,
+                packages: [{name: 'dojo', location: '../dojo'},
+                           {name: 'dijit', location: '../dijit'},
+                           {name: 'dojox', location: '../dojox'},
+                           {name: 'xstyle', location: '../../libs/xstyle'},
+                           {name: 'bacon', location: '../../libs/bacon'},
+                           {name: 'underscore', location: '../../libs/underscore'},
+                           {name: 'd3', location: '../../libs/d3'},
+                           {name: 'pv', location: '../../libs/pv/src'},
+                           {name: 'dojo-theme-flat', location: '../../libs/dojo-theme-flat'},
+                           {name: 'uiec-common', location: '../../libs/common'},
+                           {name: 'layercake', location: '../../layercake'}],
+                parseOnLoad: true"></script>
+
+  <script type="text/javascript">
+    require(["layercake/base"],
+            require.bind(null, ["layercake/LayerCakeApp"]));
+  </script>
+
+<script type="text/javascript">
+  var firstFile = {
+    path: "./static/proteins/humanb_proteins.txt",
+    name: "Human"
+  };
+  var secondFile = {
+    path: "./static/proteins/mosquitob_proteins.txt",
+    name: "Mosquito"
+  };
+  var proteinsDescriptor = {
+    path: "./static/proteins/dengueproteins.csv",
+    name: "Dengue Protein"
+  };
+  var pdbsPath = "./static/pdbs/";
+  var nucleotidesPath = "./static/nucleotides.fa";
+  var distanceMatricesPath = "./static/distancematrices.txt";
+
+  var mtfiles =  {"SRR1036477": "./static/mts/d7.mt",
+                 "SRR1036617": "./static/mts/d8.mt",
+                 "SRR1036661": "./static/mts/d9.mt"};
+  var refiles = {"file": "./static/proteins/dengueproteins.csv"};
+  var pdbpath = {"Envelope_E-4X42.pdb": "./static/pdbs/Envelope_E-4X42",
+                "Gylcoprotein-4UT6.pdb": "./static/pdbs/Gylcoprotein-4UT6",
+                "MTase-4R05.pdb": "./static/pdbs/MTase-4R05",
+                "NS1-4O6B.pdb": "./static/pdbs/NS1-4O6B",
+                "NS2A-2M0S.pdb": "./static/pdbs/NS2A-2M0S",
+                "NS2B-NS3_4M9M.pdb": "./static/pdbs/NS2B-NS3_4M9M.b",
+                "NS3-2WHX.pdb": "./static/pdbs/NS3-2WHX",
+                "NS5-5DTO.pdb": "./static/pdbs/NS5-5DTO"};
+  var txtfiles = {"bayes": "./static/bayes/Binom_fitnessBR.txt",
+                 "stopcodon": "./static/bayes/Dengue2StopCodon.txt"};
+ </script>
+</head>
+
+<body class="claro layer-cake-app">
+  <div data-dojo-type="layercake/LayerCakeApp"></div>
+</body>
+</html>

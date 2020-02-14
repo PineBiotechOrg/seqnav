@@ -1,0 +1,18 @@
+Gene Name ,Short Name,Type,Start Nucelotide ,End Nucleotide ,Start Protein,End Protein,Level ,PDB file ,Description
+5'UTR,5',5'UTR,1,96,,,,,
+flavivirus polyprotein gene,polyprotein,Protein ,97,10272,1,3391,1,,
+anchored capsid protein C,C,Protein ,97,438,1,114,2,,Basic protein involved in packaging the viral genome into a nucleocapsid core.Capsid is found in two forms: membrane anchord capsid (anchC) can be cleaved by the host cell peptidase to yield the mature capsid protein.
+capsid protein C,C,Protein ,97,396,1,100,2,,Basic protein involved in packaging the viral genome into a nucleocapsid core.Capsid is found in two forms: membrane anchord capsid (anchC) can be cleaved by the host cell peptidase to yield the mature capsid protein.
+membrane glycoprotein precursor M,M,Protein ,439,936,115,280,2,,Membrane glycoprotein expressed as a precursor (prM). prM is cleaved during particle maturation.
+protein pr,Pr,Protein ,439,711,115,205,3,,"While it is an essential component of the DENV viral cycle, little it known about its biological function. "
+membrane glycoprotein M,M,Protein ,712,936,206,280,3,Gylcoprotein-4UT6,Membrane glycoprotein expressed as a precursor (prM). prM is cleaved during particle maturation.
+envelope protein E,E,Protein ,937,2421,281,775,2,Envelope_E-4X42,Membrane glycoprotein containing receptor binding site and fusion peptide.
+nonstructural protein NS1,NS1,Protein ,2422,3477,776,1127,2,NS1-4O6B,Unknown function; may play a role in RNA replication. Cell surface and secreted forms exists as well.
+nonstructural protein NS2A,NS2A,Protein ,3478,4131,1128,1345,2,NS2A-2M0S,essentail for viral replication that functions in the virion assembly and antagonizes the host immune system response. 
+nonstructural protein NS2B,NS2B,Protein ,4132,4521,1346,1475,2,NS2B-NS3_4M9M,Serine protease co-factor.
+nonstructural protein NS3,NS3,Protein ,4522,6375,1476,2093,2,NS3-2WHX,Serine protease; RNA helicase.
+nonstructural protein NS4A,NS4A,Protein ,6376,6756,2094,2220,2,, NS4A might also regulate the ATPase activity of the NS3 helicase.
+protein 2K,2K,Protein ,6757,6825,2221,2243,2,,Peptide 2k functions as a signal peptide for NS4B and is required for the interferon antagonism activity of the latter.
+nonstructural protein NS4B,NS4B,Protein ,6826,7569,2244,2491,2,,essentail components of the ER membrane-assoicated replication complex 
+RNA-dependent RNA polymerase NS5,NS5,Protein ,7570,10269,2492,3391,2,NS5-5DTO,"RNA dependent RNA polymerase, methyl transferase, guanylyl transferase."
+3' UTR ,3',"3""UTR",10273,10723,,,,,

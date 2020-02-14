@@ -1,0 +1,23 @@
+.proteins-bar rect {
+  fill: lightgray;
+  cursor: pointer;
+  opacity: 0.5;
+}
+.proteins-bar rect:hover {
+  fill: gray;
+}
+.protein-header {
+  dominant-baseline: central;
+  font-family: 'Open Sans', sans-serify;
+  font-size: 80%;
+}
+.proteins-bar text {
+  cursor: pointer;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-family: 'Open Sans', sans-serify;
+}
+.highlighted-proteins-area {
+  opacity: 0.3;
+  fill: #3D3D3D;
+}

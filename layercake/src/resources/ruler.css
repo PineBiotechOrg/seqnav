@@ -1,0 +1,11 @@
+.ruler-ticks text {
+  font-size: 70%;
+  fill: gray;
+  text-anchor: middle;
+}
+.ruler-ticks text:first-child {
+  text-anchor: start;
+}
+.ruler-ticks text:last-child {
+  text-anchor: end;
+}

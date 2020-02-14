@@ -1,0 +1,56 @@
+.color-bar .gradient {
+  margin: 0.3em 2.3em 0em 2.3em;
+}
+.color-bar .gradient > table {
+  border-collapse: collapse;
+  height: 1em;
+}
+.color-bar .tick {
+  position: absolute;
+  height: 0.5em;
+  font-size: 80%;
+}
+.color-bar .dijitSliderBumper {
+  height: 10px;
+  background-image: none;
+}
+.color-bar .dijitSlider .dijitSliderLeftBumper {
+  background-color: #D4D4D4;
+}
+.color-bar .dijitSlider .dijitSliderRightBumper {
+  background-color: red;
+  border: solid 1px #0068A5;
+}
+.color-bar .dijitSliderBarH {
+  height: 10px;
+}
+.color-bar .colored-progress-bar {
+  background-color: #D4D4D4;
+  background-image: none;
+}
+.color-bar .colored-remaining-bar > span {
+  display: inline-block;
+  width: 50%;
+  height: 10px;
+  float: right;
+}
+.color-bar .colored-remaining-bar .left {
+  background: linear-gradient(to left, yellow, #D4D4D4);
+}
+.color-bar .colored-remaining-bar .right {
+  background: linear-gradient(to left, red, yellow);
+}
+.color-bar .left-remainder,
+.color-bar .right-remainder {
+  position: absolute;
+  height: 10px;
+  border-color: #0068A5;
+  border-style: solid;
+  border-width: 1px 0px 1px 0px;
+}
+.color-bar .left-remainder {
+  background: #D4D4D4;
+}
+.color-bar .right-remainder {
+  background: red;
+}

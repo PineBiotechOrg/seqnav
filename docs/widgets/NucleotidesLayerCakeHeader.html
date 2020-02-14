@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>NucleotidesLayerCakeHeader.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>NucleotidesLayerCakeHeader.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>,
+        <span class="hljs-string">"./AbstractLayerCakeHeader"</span>],
+(declare, lang,
+ AbstractLayerCakeHeader) -&gt;
+
+  declare AbstractLayerCakeHeader, {
+    constructor: <span class="hljs-function">-&gt;</span>
+      @cellsArea.classed(<span class="hljs-string">"nucleotide-cells"</span>, <span class="hljs-literal">true</span>)
+
+    setData: <span class="hljs-function"><span class="hljs-params">(data)</span> -&gt;</span>
+      @inherited arguments, [data, <span class="hljs-function"><span class="hljs-params">(x)</span> -&gt;</span> x.avg]
+
+      text = @cellsArea.selectAll(<span class="hljs-string">"text"</span>).data(data)
+      text.enter()
+        .append(<span class="hljs-string">"text"</span>)
+          .attr(<span class="hljs-string">"y"</span>, @cellHeight / <span class="hljs-number">2</span>)
+      text.exit().remove()
+      text.text(<span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span> d.reference)
+
+      @resize @currentSize <span class="hljs-keyword">if</span> (@currentSize)
+
+    resize: <span class="hljs-function"><span class="hljs-params">(s)</span> -&gt;</span>
+      @inherited arguments
+
+      <span class="hljs-keyword">if</span> (@initialized)
+        @cellsArea.selectAll(<span class="hljs-string">"text"</span>)
+          .attr(<span class="hljs-string">"x"</span>, <span class="hljs-function"><span class="hljs-params">(x, i)</span> =&gt;</span> (i + <span class="hljs-number">0.5</span>) * @width - <span class="hljs-number">1</span>)
+
+    _getRectanglesBarVerticalOffset: <span class="hljs-function">-&gt;</span> <span class="hljs-number">0</span>
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

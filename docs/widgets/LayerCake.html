@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>LayerCake.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="AbstractLayerCakeHeader.html">
+                  AbstractLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="AminoacidsLayerCakeHeader.html">
+                  AminoacidsLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinLayerCakeHeader.html">
+                  BinLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="BinsMap.html">
+                  BinsMap.coffee
+                </a>
+              
+                
+                <a class="source" href="CheckBox.html">
+                  CheckBox.coffee
+                </a>
+              
+                
+                <a class="source" href="ColorBar.html">
+                  ColorBar.coffee
+                </a>
+              
+                
+                <a class="source" href="CoverageGraph.html">
+                  CoverageGraph.coffee
+                </a>
+              
+                
+                <a class="source" href="LayerCake.html">
+                  LayerCake.coffee
+                </a>
+              
+                
+                <a class="source" href="MessageDialog.html">
+                  MessageDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesLayerCakeHeader.html">
+                  NucleotidesLayerCakeHeader.coffee
+                </a>
+              
+                
+                <a class="source" href="NucleotidesMap.html">
+                  NucleotidesMap.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinView.html">
+                  ProteinView.coffee
+                </a>
+              
+                
+                <a class="source" href="ProteinsBar.html">
+                  ProteinsBar.coffee
+                </a>
+              
+                
+                <a class="source" href="Ruler.html">
+                  Ruler.coffee
+                </a>
+              
+                
+                <a class="source" href="StackDialog.html">
+                  StackDialog.coffee
+                </a>
+              
+                
+                <a class="source" href="nucleotidesTooltip.html">
+                  nucleotidesTooltip.coffee
+                </a>
+              
+                
+                <a class="source" href="progressIndicator.html">
+                  progressIndicator.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>LayerCake.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/Evented"</span>,
+        <span class="hljs-string">"./../uiUtils"</span>, <span class="hljs-string">"./CheckBox"</span>,
+        <span class="hljs-string">"dojo/i18n!./../nls/base"</span>,
+        <span class="hljs-string">"xstyle/css!./../resources/layer-cake.css"</span>],
+(declare, lang, Evented,
+ uiUtils, CheckBox,
+ strings) -&gt;
+
+  SelectionCaret = declare <span class="hljs-literal">null</span>, {
+    row: <span class="hljs-number">-1</span>
+    column: <span class="hljs-number">-1</span>
+
+    constructor: <span class="hljs-function"><span class="hljs-params">(parent, horizontalOffset, cellHeight, rowGap, selectionMode)</span> -&gt;</span>
+      @area = parent.append(<span class="hljs-string">"rect"</span>)
+        .attr(<span class="hljs-string">"y"</span>, <span class="hljs-keyword">if</span> (selectionMode <span class="hljs-keyword">is</span> <span class="hljs-string">"column"</span>) <span class="hljs-keyword">then</span> -cellHeight / <span class="hljs-number">2</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+        .attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(-500, 0)"</span>)
+        .classed(<span class="hljs-string">"selection-caret"</span>, <span class="hljs-literal">true</span>)
+      @horizontalOffset = horizontalOffset
+      @cellHeight = cellHeight
+      @rowGap = rowGap
+      @selectionMode = selectionMode
+
+    setWidth: <span class="hljs-function"><span class="hljs-params">(width)</span> -&gt;</span>
+      @cellWidth = width
+      @area.attr(<span class="hljs-string">"width"</span>, width - <span class="hljs-number">2</span>)
+
+    setHeight: <span class="hljs-function"><span class="hljs-params">(rowsCount, reserveForFitness)</span> -&gt;</span>
+      @reserveForFitness = reserveForFitness
+      <span class="hljs-keyword">if</span> (@selectionMode <span class="hljs-keyword">is</span> <span class="hljs-string">"column"</span>)
+        rowsCount = <span class="hljs-keyword">if</span> (reserveForFitness) <span class="hljs-keyword">then</span> rowsCount + <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> rowsCount
+        @area.attr(<span class="hljs-string">"height"</span>, rowsCount * (@cellHeight + @rowGap) + @cellHeight - @rowGap)
+      <span class="hljs-keyword">else</span>
+        @area.attr(<span class="hljs-string">"height"</span>, @cellHeight + <span class="hljs-number">6</span>)
+
+    hide: <span class="hljs-function">-&gt;</span>
+      <span class="hljs-keyword">if</span> (@row <span class="hljs-keyword">isnt</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">or</span> @column <span class="hljs-keyword">isnt</span> <span class="hljs-number">-1</span>)
+        @area.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(-500, 0)"</span>)
+        @row = <span class="hljs-number">-1</span>
+        @column = <span class="hljs-number">-1</span>
+        @data = <span class="hljs-literal">undefined</span>
+
+    setPosition: <span class="hljs-function"><span class="hljs-params">(row, column, data, pos)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (@row <span class="hljs-keyword">isnt</span> row <span class="hljs-keyword">or</span> @column <span class="hljs-keyword">isnt</span> column)
+        offsetX = column * @cellWidth + @horizontalOffset
+        offsetY2 = <span class="hljs-keyword">if</span> (@reserveForFitness) <span class="hljs-keyword">then</span> @cellHeight <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+        offsetY = <span class="hljs-keyword">if</span> (@selectionMode <span class="hljs-keyword">is</span> <span class="hljs-string">"column"</span>) <span class="hljs-keyword">then</span> <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> (@cellHeight + @rowGap) * row + offsetY2 - <span class="hljs-number">3</span>
+        @area.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{offsetX}</span>, <span class="hljs-subst">#{offsetY}</span>)"</span>)
+        @row = row
+        @column = column
+        @data = data
+
+    getSelection: <span class="hljs-function">-&gt;</span>
+      row: @row
+      column: @column
+      data: @data
+  }
+<span class="hljs-function">
+  <span class="hljs-title">fitnessToClass</span> = <span class="hljs-params">(xs)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> (xs.length <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>)
+      <span class="hljs-string">"no-fitness"</span>
+    <span class="hljs-keyword">else</span>
+      fitness = xs[<span class="hljs-number">0</span>].fitness
+      <span class="hljs-keyword">if</span> (_.every(xs, <span class="hljs-function"><span class="hljs-params">(x)</span> -&gt;</span> x.fitness <span class="hljs-keyword">is</span> fitness))
+        <span class="hljs-keyword">switch</span> (fitness)
+          <span class="hljs-keyword">when</span> <span class="hljs-string">"B"</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"beneficial-fitness"</span>
+          <span class="hljs-keyword">when</span> <span class="hljs-string">"N"</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"neutral-fitness"</span>
+          <span class="hljs-keyword">when</span> <span class="hljs-string">"D"</span> <span class="hljs-keyword">then</span> <span class="hljs-string">"detrimental-fitness"</span>
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-string">"mixed-fitness"</span>
+
+  declare Evented, {
+    cellHeight: <span class="hljs-number">24</span>
+    rowGap: <span class="hljs-number">10</span>
+
+    lowThreshold: <span class="hljs-number">0</span>
+
+    constructor: (baseDomNode, area, labelWidth,
+                  columnExtractor, rowExtractor, colorValueExtractor,
+                  selectionMode) -&gt;
+      <span class="hljs-built_in">window</span>.baseDomNode = @baseDomNode = baseDomNode
+      @area = area.classed(<span class="hljs-string">"cake"</span>, <span class="hljs-literal">true</span>)
+      @labelWidth = labelWidth
+      @columnExtractor = columnExtractor
+      @rowExtractor = rowExtractor
+      @colorValueExtractor = colorValueExtractor
+      @labels = @area.append(<span class="hljs-string">"g"</span>)
+        .attr(<span class="hljs-string">"labels"</span>, <span class="hljs-literal">true</span>)
+      @fitnessRects = @area.append(<span class="hljs-string">"g"</span>)
+        .attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{labelWidth}</span>, 0)"</span>)
+      @table = @area.append(<span class="hljs-string">"g"</span>)
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"click"</span>, @mouseClickHandler.bind @)
+      @selectionCaret = <span class="hljs-keyword">new</span> SelectionCaret(@area, labelWidth, @cellHeight, @rowGap, selectionMode)
+      <span class="hljs-built_in">window</span>.model.getChosenPassagesBus().onValue @passagesUpdated.bind @
+
+    setData: <span class="hljs-function"><span class="hljs-params">(populations, data, fitnessTable, binsCount)</span> -&gt;</span>
+      @populations = populations
+      @data = data
+      @binsCount = binsCount
+      @fitnessTable = fitnessTable
+      @_updateTable()
+
+    setLowThreshold: <span class="hljs-function"><span class="hljs-params">(newValue)</span> -&gt;</span>
+      @lowThreshold = newValue
+      @_updateTable()
+
+    setFitness: <span class="hljs-function"><span class="hljs-params">(fitnessTable)</span> -&gt;</span>
+      @fitnessTable = fitnessTable
+      @updateFitness()
+
+    checkboxes: []
+    _updateTable: <span class="hljs-function">-&gt;</span>
+      colors = uiUtils.makeColorsIterator()
+
+      _.each @checkboxes, <span class="hljs-function"><span class="hljs-params">(cb)</span> -&gt;</span> cb.destroy()
+      @checkboxes = _.map(@populations, <span class="hljs-function"><span class="hljs-params">(population, i)</span> =&gt;</span>
+        <span class="hljs-keyword">new</span> CheckBox({
+              parent: @labels,
+              state: <span class="hljs-literal">true</span>,
+              label:  population,
+              onMouseClick: <span class="hljs-function"><span class="hljs-params">(evt)</span> -&gt;</span> <span class="hljs-built_in">window</span>.model.updatePassage(i, evt.state)
+            })
+          .move(<span class="hljs-number">0</span>, i * (@cellHeight + @rowGap) + <span class="hljs-number">4</span>)
+          .fill(colors.next())
+      )
+      @passagesUpdated(<span class="hljs-built_in">window</span>.model.getChosenPassages())</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p> .append(“text”)
+    .attr(“y”, (x, i) =&gt; (i + 0.5) <em> @cellHeight + @rowGap </em> i)
+text.exit().remove()
+text.text((d) -&gt; d)
+ .style(“fill”, colors.next.bind())</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+      rect = @table.selectAll(<span class="hljs-string">"rect"</span>).data(@data, <span class="hljs-function"><span class="hljs-params">(obj)</span> =&gt;</span> <span class="hljs-string">"<span class="hljs-subst">#{@columnExtractor(obj)}</span>.<span class="hljs-subst">#{@rowExtractor(obj)}</span>"</span>)
+      rect.enter().append(<span class="hljs-string">"rect"</span>)
+        .attr(<span class="hljs-string">"y"</span>, <span class="hljs-function"><span class="hljs-params">(obj)</span> =&gt;</span> @rowExtractor(obj) * (@rowGap + @cellHeight))
+        .attr(<span class="hljs-string">"height"</span>, @cellHeight)
+        .<span class="hljs-literal">on</span>(<span class="hljs-string">"mousemove"</span>, @mouseMoveHandler.bind(@))
+      rect.exit().remove()
+      rect.style(<span class="hljs-string">"fill"</span>, <span class="hljs-function"><span class="hljs-params">(d)</span> =&gt;</span> uiUtils.getColor(@lowThreshold, @colorValueExtractor(d)))
+
+      @updateFitness()
+
+      @resize @currentSize <span class="hljs-keyword">if</span> @currentSize?
+
+    updateFitness: <span class="hljs-function">-&gt;</span>
+      @reserveForFitness = <span class="hljs-keyword">not</span> _.isEmpty(@fitnessTable.getFilter())
+      @table.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{@labelWidth}</span>, <span class="hljs-subst">#{<span class="hljs-keyword">if</span> (@reserveForFitness) <span class="hljs-keyword">then</span> @cellHeight <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>}</span>)"</span>)
+      @labels.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(0, <span class="hljs-subst">#{<span class="hljs-keyword">if</span> (@reserveForFitness) <span class="hljs-keyword">then</span> @cellHeight <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>}</span>)"</span>)
+      fitnessRect = @fitnessRects.selectAll(<span class="hljs-string">"polyline"</span>).data(@fitnessTable.getData())
+      fitnessRect.enter().append(<span class="hljs-string">"polyline"</span>)
+      fitnessRect.exit().remove()
+      fitnessRect.each (fitness) -&gt; @setAttribute <span class="hljs-string">"class"</span>, fitnessToClass(fitness)
+      @selectionCaret.setHeight(@populations.length, @reserveForFitness)
+
+    passagesUpdated: <span class="hljs-function"><span class="hljs-params">(arr)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> (@checkboxes.length &gt; <span class="hljs-number">0</span>)
+        _.each arr, <span class="hljs-function"><span class="hljs-params">(val, idx)</span> =&gt;</span> @checkboxes[idx].setState val
+
+    mouseMoveHandler: <span class="hljs-function"><span class="hljs-params">(d)</span> -&gt;</span>
+      clientX = d3.event.clientX
+      clientY = d3.event.clientY
+      x = clientX - @baseRootRect.left
+      y = clientY - @baseRootRect.top</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>if (x &lt;= @labelWidth or
+   x &gt;= @currentSize.w + (@currentSize.x || 0) - 11)
+ @selectionCaret.hide()
+else</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      row = @rowExtractor d
+      column = @columnExtractor d
+      rect = {x: clientX, y: clientY}
+      @selectionCaret.setPosition(row, column, d, rect)
+      <span class="hljs-keyword">this</span>.emit <span class="hljs-string">"mouseMove"</span>, {row: row, column: column, rect: rect, d: d}
+
+    mouseClickHandler: <span class="hljs-function">-&gt;</span>
+      selection = @selectionCaret.getSelection()
+      @emit(<span class="hljs-string">"mouseClick"</span>, selection) <span class="hljs-keyword">if</span> (selection.row <span class="hljs-keyword">isnt</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">and</span> selection.column <span class="hljs-keyword">isnt</span> <span class="hljs-number">-1</span>)
+
+    hideSelectionCaret: <span class="hljs-function">-&gt;</span> @selectionCaret.hide()
+
+    resize: <span class="hljs-function"><span class="hljs-params">(s)</span> -&gt;</span>
+      @currentSize = s
+      @baseRootRect = @baseDomNode.getBoundingClientRect()
+      <span class="hljs-keyword">if</span> (@binsCount?)
+        @cellWidth = (s.w - @labelWidth) / @binsCount
+        @table.selectAll(<span class="hljs-string">"rect"</span>)
+          .attr(<span class="hljs-string">"width"</span>, @cellWidth - <span class="hljs-number">1</span>)
+          .attr(<span class="hljs-string">"x"</span>, <span class="hljs-function"><span class="hljs-params">(obj)</span> =&gt;</span> (@columnExtractor(obj) * @cellWidth).toFixed(<span class="hljs-number">1</span>))
+        @fitnessRects.selectAll(<span class="hljs-string">"rect"</span>)
+          .attr(<span class="hljs-string">"width"</span>, @cellWidth - <span class="hljs-number">1</span>)
+          .attr(<span class="hljs-string">"x"</span>, <span class="hljs-function"><span class="hljs-params">(fitnessInfo, i)</span> =&gt;</span> (i * @cellWidth).toFixed(<span class="hljs-number">1</span>))
+        @selectionCaret.setWidth @cellWidth
+
+        @fitnessRects.selectAll(<span class="hljs-string">"polyline"</span>)
+          .attr(<span class="hljs-string">"points"</span>, <span class="hljs-function"><span class="hljs-params">(fitness, i)</span> =&gt;</span>
+            x0 = i * @cellWidth + <span class="hljs-number">1</span>
+            cellWidth = @cellWidth - <span class="hljs-number">4</span>
+            <span class="hljs-string">"<span class="hljs-subst">#{x0.toFixed(<span class="hljs-number">2</span>)}</span>,<span class="hljs-subst">#{@cellHeight - <span class="hljs-number">3</span>}</span> <span class="hljs-subst">#{(x0 + cellWidth).toFixed(<span class="hljs-number">2</span>)}</span>,<span class="hljs-subst">#{@cellHeight - <span class="hljs-number">3</span>}</span> <span class="hljs-subst">#{(x0 + cellWidth / <span class="hljs-number">2</span>).toFixed(<span class="hljs-number">2</span>)}</span>,-3"</span>
+          )
+
+    move: <span class="hljs-function"><span class="hljs-params">(x, y)</span> -&gt;</span> @area.attr(<span class="hljs-string">"transform"</span>, <span class="hljs-string">"translate(<span class="hljs-subst">#{x}</span>, <span class="hljs-subst">#{y}</span>)"</span>)
+
+    getHeight: <span class="hljs-function">-&gt;</span> (@populations.length + (<span class="hljs-keyword">if</span> (@reserveForFitness) <span class="hljs-keyword">then</span> <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)) * (@cellHeight + @rowGap) - @rowGap
+  }
+)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
